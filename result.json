@@ -1,30 +1,28 @@
 [
   {
     "title": "Set Meals",
-    "innerSection": ["Set Meal for One Person\nOnion Bhaji, Chicken Madras, Pilau Rice & Nan\n£15.95"],
-    "data": []
+    "innerSection": "Set Meal for One Person\nOnion Bhaji, Chicken Madras, Pilau Rice & Nan\n£15.95\nSet Meal for Two Person\nAny 2 Starters, Any 2 Curries, Any 1 Rice, Any 2 Nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad £1 Extra for Mixed Kebab, CSK, Prawn Cocktail & King Prawn Starter £2 Extra for Tandoori King Prawn Starter & King Prawn Curries\n£28.95\nSpecial Thali\nChicken Tikka, Onion Bhaji, Lamb Bhuna, Chicken Tikka Masala, Keema Pilau, Keema Naan (All served in small containers)\n£16.95\nMunchie Box One\nChicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)\n£17.95\nMunchie Box Two\nChicken Tikka, Sheek Kebab, Onion Bhaji, Samosa, Chicken Pakora, Chips with a Curry of Your Choice with Chicken, Lamb or Prawn, Plain Pilau & 2 Cans of Pop (Tango or Pepsi)\n£20.95\nAny Curry Sauce & Chips\n£5.50\nAny Chicken Curry with Rice & Chips\nAll in One Container\n£6.50"
   },
   {
     "title": "Starters",
-    "innerSection": ["Chicken Chaat Starter\nMashed chicken served with a puri\n£3.95"],
-    "data": []
+    "innerSection": "Chicken Chaat Starter\nMashed chicken served with a puri\n£3.95\nTikka Chaat Starter\nMarinated chicken tikka served with puri\n£3.95\nOnion Bhaji Starter\nCrispy Fried Onions\n£2.95\nVegetable Pakora Starter\nCabbage, carrot & potatoes\n£2.95\nSamosa Meat or Vegetable Starter\n£3.50\nPrawn Cocktail Starter\n£3.95\nBhuna Prawn on Puri Starter\n£3.95\nBhuna Chicken on Puri Starter\n£3.95"
   },
-  { "title": "Tandoori Starters", "innerSection": [], "data": [] },
-  { "title": "Tandoori Grilled Dishes", "innerSection": [], "data": [] },
-  { "title": "Parmesans", "innerSection": [], "data": [] },
-  { "title": "Burgers", "innerSection": [], "data": [] },
-  { "title": "Biryani Dishes", "innerSection": [], "data": [] },
-  { "title": "Traditional Curry Dishes", "innerSection": [], "data": [] },
-  { "title": "Chef's Speciality Dishes", "innerSection": [], "data": [] },
-  { "title": "Bread", "innerSection": [], "data": [] },
-  { "title": "Rice Dishes", "innerSection": [], "data": [] },
-  { "title": "Side Dishes", "innerSection": [], "data": [] },
-  { "title": "Sundries", "innerSection": [], "data": [] },
-  { "title": "English Dishes", "innerSection": [], "data": [] },
-  { "title": "Pizzas", "innerSection": [], "data": [] },
-  { "title": "Indian Pizza", "innerSection": [], "data": [] },
-  { "title": "Indian Nan Bab", "innerSection": [], "data": [] },
-  { "title": "Wraps", "innerSection": [], "data": [] },
-  { "title": "Desserts", "innerSection": [], "data": [] },
-  { "title": "Soft Drinks", "innerSection": [], "data": [] }
+  { "title": "Tandoori Starters" },
+  { "title": "Tandoori Grilled Dishes" },
+  { "title": "Parmesans" },
+  { "title": "Burgers" },
+  { "title": "Biryani Dishes" },
+  { "title": "Traditional Curry Dishes" },
+  { "title": "Chef's Speciality Dishes" },
+  { "title": "Bread" },
+  { "title": "Rice Dishes" },
+  { "title": "Side Dishes" },
+  { "title": "Sundries" },
+  { "title": "English Dishes" },
+  { "title": "Pizzas" },
+  { "title": "Indian Pizza" },
+  { "title": "Indian Nan Bab" },
+  { "title": "Wraps" },
+  { "title": "Desserts" },
+  { "title": "Soft Drinks" }
 ]

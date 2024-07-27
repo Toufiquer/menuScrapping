@@ -236,16 +236,10 @@ const run = async () => {
     const e = getNodeElements(div);
 
     let filteredData = e.map((curr) => {
-      const childrenSection = curr.children?.map((i) => {
-        if (i.children.length > 0) {
-          const lstTitle = i.children?.map((item) => item?.children[0]?.children[0]?.children[0]?.innerText);
-          return lstTitle[0];
-        }
-      });
+      const allChildrenItems = curr.children[1]?.children[0].innerText;
       const result = {
         title: curr?.children?.[0]?.children?.[0]?.innerText,
-        innerSection: childrenSection.filter((i) => i !== undefined),
-        data: [],
+        innerSection: allChildrenItems,
       };
       return result;
     });
@@ -262,7 +256,7 @@ const run = async () => {
   scrapingMenuData = [...primeMenuData];
   // console.log("scrapingMenuData : ", JSON.stringify(scrapingMenuData));
   await page.waitForTimeout(100);
-  // await page.waitForTimeout(10000);
+  await page.waitForTimeout(10000000);
 
   await browser.close();
   // ! ! ! End working here *******************************************************
