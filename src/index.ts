@@ -34,9 +34,6 @@ const run = async () => {
   let modalCount = 0;
 
   console.log("Please wait... it takes about 5-6 minutes");
-
-  // ! ! ! Start working here *******************************************************
-  // !  evaluate data for section header and set inside menuData
   const allData = await page.evaluate(async () => {
     const div = document.querySelectorAll("section[data-qa='item-category']");
     console.log("div : ", div);
@@ -148,6 +145,9 @@ const run = async () => {
 
     return e;
   });
+  // ! ! ! Start working here *******************************************************
+  // !  evaluate data for section header and set inside menuData
+
   const primeMenuData = await page.evaluate(async () => {
     const div = document.querySelectorAll("section[data-qa='item-category']");
     console.log("div : ", div);
@@ -243,7 +243,7 @@ const run = async () => {
         }
       });
       const result = {
-        title: curr?.children?.[0]?.children?.[0]?.children?.[0]?.innerText,
+        title: curr?.children?.[0]?.children?.[0]?.innerText,
         innerSection: childrenSection.filter((i) => i !== undefined),
         data: [],
       };
@@ -257,7 +257,7 @@ const run = async () => {
     console.log("");
     console.log("e ", e);
 
-    return e;
+    return filteredData;
   });
   scrapingMenuData = [...primeMenuData];
   // console.log("scrapingMenuData : ", JSON.stringify(scrapingMenuData));
