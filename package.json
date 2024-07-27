@@ -1,0 +1,24 @@
+{
+  "name": "menuscrapping",
+  "version": "1.0.0",
+  "description": "Typescript based menu scrapping terminal app with Puppeteer",
+  "main": "index.js",
+  "author": "Jahid",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "tsc --preserveWatchOutput --watch",
+    "build": "tsc --preserveWatchOutput",
+    "start": "node dist/index.js"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.9.2",
+    "prettier": "latest",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "puppeteer": "^21.5.2",
+    "uuid": "^9.0.1"
+  }
+}
