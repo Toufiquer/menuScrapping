@@ -43,35 +43,6 @@ const run = async () => {
   console.log("Please wait... it takes about 5-6 minutes");
   // !  evaluate data for section header and set inside menuData
   const primeMenuData = await page.evaluate(async () => {
-    // ! ## Scroll down to bottom ** ** ** ** ** **
-    async function smoothScrollToBottom() {
-      let scrollPosition = 0;
-      let documentHeight = document.body.scrollHeight;
-
-      while (documentHeight > scrollPosition) {
-        // Calculate the target position for the next scroll
-        const targetPosition = Math.min(documentHeight, scrollPosition + 1000); // Adjust the 100 value for scrolling speed
-
-        // Smoothly scroll to the target position
-        await new Promise((resolve) => {
-          window.scrollTo({
-            top: targetPosition,
-            behavior: "smooth",
-          });
-          setTimeout(resolve, 100);
-        });
-
-        // Update scroll position
-        scrollPosition = targetPosition;
-        documentHeight = document.body.scrollHeight;
-      }
-    }
-    smoothScrollToBottom();
-    const oldTime = Math.round(new Date().getTime());
-    while (oldTime + 10 * 1000 > new Date().getTime()) {} // Wait for 10 seconds
-
-    //  End  -----------------------------
-
     const div = document.querySelectorAll("section[data-qa='item-category']");
     console.log("div : ", div);
     const getNodeElements = (arrOfNodeElement) => {
@@ -157,11 +128,7 @@ const run = async () => {
     };
 
     const e = getNodeElements(div);
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("e", e);
+
     let filteredData = e.map((firstItem) =>
       firstItem.children?.map((curr) => {
         const childrenSection = curr.children?.map((i) => {
@@ -193,7 +160,6 @@ const run = async () => {
   // const sectionHeaders = await page.$$("section.c-menuItems-category");
   // console.log("sectionHeaders : ", sectionHeaders);
   await page.waitForTimeout(100);
-  await page.waitForTimeout(100000000);
   let index = 0;
 
   await browser.close();

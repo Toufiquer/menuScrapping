@@ -6,24 +6,12 @@
 |-----------------------------------------
 */
 
-import * as readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
 const puppeteer = require("puppeteer");
-const { v4: uuidv4 } = require("uuid");
-const existingMenu = require("../menu.json");
 const fs = require("fs");
 
-const rl = readline.createInterface({ input, output });
-
 const run = async () => {
-  // const kitchen = await rl.question("Enter kitchen name\t");
-  // const alias = await rl.question("Enter kitchen alias\t");
-  // const url = await rl.question("Enter url\t");
-
-  const kitchen = "kitchen";
-  const alias = "alias";
+  // ! Open page
   const url = "https://www.just-eat.co.uk/restaurants-spice-fossway-tandoori-walker/menu";
-
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   await page.setViewport({
@@ -34,16 +22,16 @@ const run = async () => {
     isMobile: false,
   });
   await page.goto(`${url}`);
-  // const sections = await page.$$("[data-qa='item-category']");
-  // console.log("section : ", JSON.stringify(sections));
-  let menuData = [];
-  let scrapingMenuData = [];
-  let modalCount = 0;
 
-  console.log("Please wait... it takes about 5-6 minutes");
-  // !  evaluate data for section header and set inside menuData
+  //  @@ -------------------
+  //  @@ -------------------
+  //  @@ -------------------
+
+  //  ! @@ -------------------
+  //  ! @@ -------------------
+  // ! ## Start evaluate
   const primeMenuData = await page.evaluate(async () => {
-    // ! ## Scroll down to bottom ** ** ** ** ** **
+    // ! ## Scroll down to bottom
     async function smoothScrollToBottom() {
       let scrollPosition = 0;
       let documentHeight = document.body.scrollHeight;
@@ -67,10 +55,15 @@ const run = async () => {
       }
     }
     smoothScrollToBottom();
-    const oldTime = Math.round(new Date().getTime());
-    while (oldTime + 10 * 1000 > new Date().getTime()) {} // Wait for 10 seconds
+    // -----------------------------
 
-    //  End  -----------------------------
+    // ! ## all nodes
+    const divs = document.querySelectorAll("section[data-qa='item-category']");
+
+    console.log("divs : ", divs); // You'll see each individual div element
+    // Iterate over the NodeList
+
+    // -----------------------------
 
     const div = document.querySelectorAll("section[data-qa='item-category']");
     console.log("div : ", div);
@@ -78,6 +71,16 @@ const run = async () => {
       let filterElementNodes = [];
       for (const child of arrOfNodeElement) {
         if (child.nodeType !== 8) {
+          const logAllData = (a = 1) => {
+            if (child.innerText) {
+              console.log(`${a} child : `, child);
+              console.log(`${a} child innerText : `, child.innerText);
+              console.log(`${a} newChild : `, newChild);
+              console.log(`${a} filterChild : `, filterChild);
+              console.log("");
+              console.log("");
+            }
+          };
           // This filters out comments (nodeType 8)
           const filterChild = {
             childElementCount: "",
@@ -89,6 +92,17 @@ const run = async () => {
           for (const c in child) {
             if (child[c] !== null) {
               filterChild[c] = child[c];
+              [5, 15, 14, 13].forEach((curr) => {
+                if (filterElementNodes.length === curr) {
+                  console.log("");
+                  console.log("");
+
+                  // console.log("filterChild[c] : ", filterChild[c]);
+                  console.log("");
+                  console.log("");
+                  // console.log("child[c] : ", child[c]);
+                }
+              });
             }
           }
           const newChild = {
@@ -101,6 +115,12 @@ const run = async () => {
             classList: filterChild.classList,
           };
           filterElementNodes.push({ ...newChild });
+
+          [5, 15, 14, 13].forEach((curr) => {
+            if (filterElementNodes.length === curr) {
+              logAllData(curr);
+            }
+          });
         }
       }
       //   clear child nodes by self invoked
@@ -157,11 +177,7 @@ const run = async () => {
     };
 
     const e = getNodeElements(div);
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("e", e);
+
     let filteredData = e.map((firstItem) =>
       firstItem.children?.map((curr) => {
         const childrenSection = curr.children?.map((i) => {
@@ -185,33 +201,29 @@ const run = async () => {
     console.log("e ", e);
     return filteredData;
   });
-  scrapingMenuData.push(primeMenuData);
-  await page.waitForTimeout(100);
+  //  ! @@ -------------------
+  //  ! @@ -------------------
 
-  console.log("scrapingMenuData : ", JSON.stringify(scrapingMenuData));
-
-  // const sectionHeaders = await page.$$("section.c-menuItems-category");
-  // console.log("sectionHeaders : ", sectionHeaders);
-  await page.waitForTimeout(100);
-  await page.waitForTimeout(100000000);
-  let index = 0;
-
-  await browser.close();
-
-  fs.writeFile("scrapingMenuData.json", JSON.stringify(scrapingMenuData), (err) => {
+  // ! Save json file
+  fs.writeFile("result.json", JSON.stringify("scrapingMenuData"), (err) => {
     if (err) {
       console.error(err);
       return;
     }
     console.log("Data saved to menu.json");
   });
-};
+  //  @@ -------------------
+  //  @@ -------------------
+  //  @@ -------------------
 
+  await page.waitForTimeout(1000);
+  await page.waitForTimeout(10000000);
+  // ! Close the browser
+  await browser.close();
+  console.log("");
+  console.log("");
+  console.log("");
+  console.log("");
+  console.log("complete");
+};
 run();
-console.log("");
-console.log("");
-console.log("");
-console.log("");
-console.log("");
-console.log("");
-console.log("work done ");
