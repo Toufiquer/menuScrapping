@@ -261,7 +261,7 @@ const run = async () => {
       elementIndex += 1;
       element.click();
       await page.waitForTimeout(200);
-      // ! Start fill teh address for first time --------------------------
+      // ! fill teh address for first time --------------------------
       if (elementIndex === 1) {
         try {
           const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
@@ -279,138 +279,9 @@ const run = async () => {
           console.error("Error filling input:", error);
         }
       }
-      // ! End fill teh address for first time --------------------------
-      // ! Start scrapping item data --------------------------------------------------------
-      const scrappingItemData = await page.evaluate(async () => {
-        const div = document.querySelectorAll("div[data-qa='modal']");
-        const getNodeElements = (arrOfNodeElement) => {
-          let filterElementNodes = [];
-          for (const child of arrOfNodeElement) {
-            if (child.nodeType !== 8) {
-              // This filters out comments (nodeType 8)
-              const filterChild = {
-                childElementCount: "",
-                children: "",
-                innerText: "",
-                tagName: "",
-                textContent: "",
-              };
-              for (const c in child) {
-                if (child[c] !== null) {
-                  filterChild[c] = child[c];
-                }
-              }
-              const newChild = {
-                childElementCount: filterChild.childElementCount,
-                children: filterChild.children,
-                innerText: filterChild.innerText,
-                tagName: filterChild.tagName,
-                textContent: filterChild.textContent,
-                selfNode: filterChild,
-                classList: filterChild.classList,
-              };
-              filterElementNodes.push({ ...newChild });
-            }
-          }
-          //   clear child nodes by self invoked
-          filterElementNodes = filterElementNodes.map((curr) => {
-            if (curr.childElementCount > 0) {
-              const filterChildren = getNodeElements(curr.children);
-              return {
-                ...curr,
-                children: filterChildren,
-              };
-            } else {
-              return curr;
-            }
-          });
-          return filterElementNodes
-            .filter((curr) => curr.innerText !== "")
-            .filter((curr) => curr.innerText !== undefined);
-        };
-
-        const getDataByTagName = (data, tagName = "") => {
-          let arrData = Array.isArray(data) ? data : [data];
-          if (tagName === "") {
-            return arrData;
-          }
-          const result = [];
-          arrData.forEach((curr) => {
-            if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
-              result.push(curr);
-            } else {
-              if (curr?.children?.length > 0) {
-                const findInnerData = getDataByTagName([...curr.children], tagName);
-                result.push(...findInnerData);
-              }
-            }
-          });
-          const filterData = (data) => {
-            const filteredData = data.filter((item, index, self) => {
-              // Check if item is unique
-              return (
-                index ===
-                self.findIndex(
-                  (t) =>
-                    t.tagName === item.tagName &&
-                    t.children?.length === item.children?.length &&
-                    t.innerText === item.innerText
-                )
-              );
-            });
-            return filteredData;
-          };
-
-          const filterResult = filterData(result);
-          return filterResult;
-        };
-
-        const e = getNodeElements(div);
-
-        // await page.locator("input").fill("value");
-
-        console.log(" modal e : ", e);
-        console.log("");
-        console.log("");
-        console.log("");
-
-        let filteredData = e.map((curr) => {
-          return curr;
-          const childrenSection = curr?.children?.[1].children?.[0].children?.[0].children?.map(
-            (item) =>
-              item.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.innerText
-          );
-          const result = {
-            item: curr?.children[0]?.children[0]?.children[0]?.children?.innerText,
-            price: "",
-            info: "",
-            option: [],
-          };
-          return result;
-        });
-
-        return filteredData;
-      });
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("scrapping Item data ", scrappingItemData);
-      // ! End scrapping item data --------------------------------------------------------
+      // ! fill teh address for first time --------------------------
 
       await page.waitForTimeout(500);
-
-      const getFieldElements = await page.$$("div[data-qa='modal']");
-      for (const filedElement of getFieldElements) {
-        //obtain text
-        const filedElementText = await (await filedElement.getProperty("textContent")).jsonValue();
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log("filedElementText : ", filedElementText);
-      }
       console.log("");
       console.log("");
       console.log("");
@@ -425,7 +296,7 @@ const run = async () => {
   }
   // ! End Scrapping Inner data ----------------------------------
   await page.waitForTimeout(10);
-  // await page.waitForTimeout(100000000);
+  await page.waitForTimeout(100000000);
 
   // ! copy from old data --------------------------------
   let timeCount = 1000;

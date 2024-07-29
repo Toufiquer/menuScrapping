@@ -105,6 +105,7 @@ const run = async () => {
   console.log("Please wait... it takes about 5-6 minutes");
   // !  evaluate data for section header and set inside menuData
   const primeMenuData = await page.evaluate(async () => {
+    const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
     async function smoothScrollToBottom() {
       let scrollPosition = 0;
       let documentHeight = document.body.scrollHeight;
@@ -239,195 +240,15 @@ const run = async () => {
       return result;
     });
 
+    // ! Start Scrapping Inner data ----------------------------------
+
+    // ! Start Scrapping Inner data ----------------------------------
     return filteredData;
   });
   scrapingMenuData.push(...primeMenuData);
-  // ! Start Scrapping Inner data ----------------------------------
-  // const div = document.querySelectorAll("section[data-qa='item-category']");
-  // ! Start Scrapping Inner data ----------------------------------
-  //identify element with attribute selector
-  const getAllElement = await page.$$("div[data-qa='flex']");
-  console.log("getAllElement", JSON.stringify(getAllElement.length));
-  let elementIndex = 0;
-  for (const element of getAllElement) {
-    //obtain text
-    const t = await (await element.getProperty("textContent")).jsonValue();
-    const isExistOnScrapingMenuData = (checkingTitle: string) => {
-      return scrapingMenuData.find((mainItem) =>
-        mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
-      );
-    };
-    if (isExistOnScrapingMenuData(t)) {
-      elementIndex += 1;
-      element.click();
-      await page.waitForTimeout(200);
-      // ! Start fill teh address for first time --------------------------
-      if (elementIndex === 1) {
-        try {
-          const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
-          const getInputElements = await page.$$("input[data-qa='location-panel-search-input-address-element-error']");
-          for (const input of getInputElements) {
-            await input.click();
-          }
-          await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
-          await page.waitForTimeout(2000);
-          const getAllClickedArea = await page.$$("div[data-qa='text']");
-          for (const addressText of getAllClickedArea) {
-            await addressText.click();
-          }
-        } catch (error) {
-          console.error("Error filling input:", error);
-        }
-      }
-      // ! End fill teh address for first time --------------------------
-      // ! Start scrapping item data --------------------------------------------------------
-      const scrappingItemData = await page.evaluate(async () => {
-        const div = document.querySelectorAll("div[data-qa='modal']");
-        const getNodeElements = (arrOfNodeElement) => {
-          let filterElementNodes = [];
-          for (const child of arrOfNodeElement) {
-            if (child.nodeType !== 8) {
-              // This filters out comments (nodeType 8)
-              const filterChild = {
-                childElementCount: "",
-                children: "",
-                innerText: "",
-                tagName: "",
-                textContent: "",
-              };
-              for (const c in child) {
-                if (child[c] !== null) {
-                  filterChild[c] = child[c];
-                }
-              }
-              const newChild = {
-                childElementCount: filterChild.childElementCount,
-                children: filterChild.children,
-                innerText: filterChild.innerText,
-                tagName: filterChild.tagName,
-                textContent: filterChild.textContent,
-                selfNode: filterChild,
-                classList: filterChild.classList,
-              };
-              filterElementNodes.push({ ...newChild });
-            }
-          }
-          //   clear child nodes by self invoked
-          filterElementNodes = filterElementNodes.map((curr) => {
-            if (curr.childElementCount > 0) {
-              const filterChildren = getNodeElements(curr.children);
-              return {
-                ...curr,
-                children: filterChildren,
-              };
-            } else {
-              return curr;
-            }
-          });
-          return filterElementNodes
-            .filter((curr) => curr.innerText !== "")
-            .filter((curr) => curr.innerText !== undefined);
-        };
-
-        const getDataByTagName = (data, tagName = "") => {
-          let arrData = Array.isArray(data) ? data : [data];
-          if (tagName === "") {
-            return arrData;
-          }
-          const result = [];
-          arrData.forEach((curr) => {
-            if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
-              result.push(curr);
-            } else {
-              if (curr?.children?.length > 0) {
-                const findInnerData = getDataByTagName([...curr.children], tagName);
-                result.push(...findInnerData);
-              }
-            }
-          });
-          const filterData = (data) => {
-            const filteredData = data.filter((item, index, self) => {
-              // Check if item is unique
-              return (
-                index ===
-                self.findIndex(
-                  (t) =>
-                    t.tagName === item.tagName &&
-                    t.children?.length === item.children?.length &&
-                    t.innerText === item.innerText
-                )
-              );
-            });
-            return filteredData;
-          };
-
-          const filterResult = filterData(result);
-          return filterResult;
-        };
-
-        const e = getNodeElements(div);
-
-        // await page.locator("input").fill("value");
-
-        console.log(" modal e : ", e);
-        console.log("");
-        console.log("");
-        console.log("");
-
-        let filteredData = e.map((curr) => {
-          return curr;
-          const childrenSection = curr?.children?.[1].children?.[0].children?.[0].children?.map(
-            (item) =>
-              item.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.innerText
-          );
-          const result = {
-            item: curr?.children[0]?.children[0]?.children[0]?.children?.innerText,
-            price: "",
-            info: "",
-            option: [],
-          };
-          return result;
-        });
-
-        return filteredData;
-      });
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("scrapping Item data ", scrappingItemData);
-      // ! End scrapping item data --------------------------------------------------------
-
-      await page.waitForTimeout(500);
-
-      const getFieldElements = await page.$$("div[data-qa='modal']");
-      for (const filedElement of getFieldElements) {
-        //obtain text
-        const filedElementText = await (await filedElement.getProperty("textContent")).jsonValue();
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log("filedElementText : ", filedElementText);
-      }
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log(elementIndex, "t : ", t);
-      console.log("");
-      console.log("");
-      console.log("item : ", isExistOnScrapingMenuData(t).title);
-    }
-
-    await page.waitForTimeout(5);
-  }
-  // ! End Scrapping Inner data ----------------------------------
   await page.waitForTimeout(10);
-  // await page.waitForTimeout(100000000);
+  await page.waitForTimeout(100000000);
 
-  // ! copy from old data --------------------------------
   let timeCount = 1000;
   for (const section of sections) {
     const label = await page.evaluate((el) => el.innerText, section);
@@ -970,7 +791,6 @@ const run = async () => {
     };
     menuData.push(singleSection);
   }
-  // ! copy from old data --------------------------------
 
   const plainObject = Object.assign({}, ...menuData);
 
