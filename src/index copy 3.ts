@@ -16,61 +16,6 @@ const fs = require("fs");
 const rl = readline.createInterface({ input, output });
 
 const run = async () => {
-  // const isPriceIncrease = await rl.question("Are you increasing price (y/n)\t");
-
-  // if (isPriceIncrease === "y") {
-  //   const increasePercentage = await rl.question("Enter percentage of increase (0.1)\t");
-
-  //   Object.keys(existingMenu).map((menuKey, index) => {
-  //     if (existingMenu[menuKey].lst) {
-  //       existingMenu[menuKey].lst.map((item) => {
-  //         const increasedPrice = Number(item.price) * Number(increasePercentage);
-  //         item.price = (Number(item.price) + increasedPrice).toFixed(2);
-  //       });
-  //     }
-  //   });
-
-  //   const updatedMenuData = JSON.stringify(existingMenu, null, 2);
-
-  //   fs.writeFile("menu.json", updatedMenuData, (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //       return;
-  //     }
-  //     console.log("Data saved to menu.json");
-  //   });
-
-  //   // loop existing menu
-  // }
-
-  // const isPriceDecrease = await rl.question("Are you decreasing price (y/n)\t");
-
-  // if (isPriceDecrease === "y") {
-  //   const decreasePercentage = await rl.question("Enter percentage of decrease (0.1)\t");
-
-  //   Object.keys(existingMenu).map((menuKey, index) => {
-  //     if (existingMenu[menuKey].lst) {
-  //       existingMenu[menuKey].lst.map((item) => {
-  //         const increasedPrice = Number(item.price) * Number(decreasePercentage);
-  //         item.price = (Number(item.price) - increasedPrice).toFixed(2);
-  //       });
-  //     }
-  //   });
-
-  //   const updatedMenuData = JSON.stringify(existingMenu, null, 2);
-
-  //   fs.writeFile("menu.json", updatedMenuData, (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //       return;
-  //     }
-  //     console.log("Data saved to menu.json");
-  //   });
-  // } else {
-  // const kitchen = await rl.question("Enter kitchen name\t");
-  // const alias = await rl.question("Enter kitchen alias\t");
-  // const url = await rl.question("Enter url\t");
-
   const kitchen = "kitchen";
   const alias = "alias";
   const url = "https://www.just-eat.co.uk/restaurants-spice-fossway-tandoori-walker/menu";
@@ -251,185 +196,48 @@ const run = async () => {
   let elementIndex = 0;
   let addressElementIndex = 0;
   for (const element of getAllElement) {
-    //obtain text
-    const t = await (await element.getProperty("textContent")).jsonValue();
-    const isExistOnScrapingMenuData = (checkingTitle: string) => {
-      return scrapingMenuData.find((mainItem) =>
-        mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
-      );
-    };
-    if (isExistOnScrapingMenuData(t)) {
-      elementIndex += 1;
-      element.click();
-      await page.waitForTimeout(200);
-      // ! Start fill teh address for first time --------------------------
-      if (elementIndex === 1) {
-        try {
-          const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
-          const getInputElements = await page.$$("input[data-qa='location-panel-search-input-address-element-error']");
-          for (const input of getInputElements) {
-            await input.click();
+    addressElementIndex += 1;
+    if (addressElementIndex < 10) {
+      //obtain text
+      const t = await (await element.getProperty("textContent")).jsonValue();
+      const isExistOnScrapingMenuData = (checkingTitle: string) => {
+        return scrapingMenuData.find((mainItem) =>
+          mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
+        );
+      };
+      if (isExistOnScrapingMenuData(t)) {
+        elementIndex += 1;
+        element.click();
+        await page.waitForTimeout(200);
+        // ! Start fill teh address for first time --------------------------
+        if (elementIndex === 1) {
+          try {
+            const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
+            const getInputElements = await page.$$(
+              "input[data-qa='location-panel-search-input-address-element-error']"
+            );
+            for (const input of getInputElements) {
+              await input.click();
+            }
+            await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
+            await page.waitForTimeout(2000);
+            const getAllClickedArea = await page.$$("div[data-qa='text']");
+            for (const addressText of getAllClickedArea) {
+              await addressText.click();
+            }
+          } catch (error) {
+            console.error("Error filling input:", error);
           }
-          await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
-          await page.waitForTimeout(2000);
-          const getAllClickedArea = await page.$$("div[data-qa='text']");
-          for (const addressText of getAllClickedArea) {
-            await addressText.click();
-          }
-        } catch (error) {
-          console.error("Error filling input:", error);
         }
+        // ! End fill teh address for first time --------------------------
+
+        await page.waitForTimeout(10);
       }
-      // ! End fill teh address for first time --------------------------
-      // ! Start scrapping item data --------------------------------------------------------
-      // const scrappingItemData = await page.evaluate(async () => {
-      //   const div = document.querySelectorAll("div[data-qa='modal']");
-      //   const getNodeElements = (arrOfNodeElement) => {
-      //     let filterElementNodes = [];
-      //     for (const child of arrOfNodeElement) {
-      //       if (child.nodeType !== 8) {
-      //         // This filters out comments (nodeType 8)
-      //         const filterChild = {
-      //           childElementCount: "",
-      //           children: "",
-      //           innerText: "",
-      //           tagName: "",
-      //           textContent: "",
-      //         };
-      //         for (const c in child) {
-      //           if (child[c] !== null) {
-      //             filterChild[c] = child[c];
-      //           }
-      //         }
-      //         const newChild = {
-      //           childElementCount: filterChild.childElementCount,
-      //           children: filterChild.children,
-      //           innerText: filterChild.innerText,
-      //           tagName: filterChild.tagName,
-      //           textContent: filterChild.textContent,
-      //           selfNode: filterChild,
-      //           classList: filterChild.classList,
-      //         };
-      //         filterElementNodes.push({ ...newChild });
-      //       }
-      //     }
-      //     //   clear child nodes by self invoked
-      //     filterElementNodes = filterElementNodes.map((curr) => {
-      //       if (curr.childElementCount > 0) {
-      //         const filterChildren = getNodeElements(curr.children);
-      //         return {
-      //           ...curr,
-      //           children: filterChildren,
-      //         };
-      //       } else {
-      //         return curr;
-      //       }
-      //     });
-      //     return filterElementNodes
-      //       .filter((curr) => curr.innerText !== "")
-      //       .filter((curr) => curr.innerText !== undefined);
-      //   };
-
-      //   const getDataByTagName = (data, tagName = "") => {
-      //     let arrData = Array.isArray(data) ? data : [data];
-      //     if (tagName === "") {
-      //       return arrData;
-      //     }
-      //     const result = [];
-      //     arrData.forEach((curr) => {
-      //       if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
-      //         result.push(curr);
-      //       } else {
-      //         if (curr?.children?.length > 0) {
-      //           const findInnerData = getDataByTagName([...curr.children], tagName);
-      //           result.push(...findInnerData);
-      //         }
-      //       }
-      //     });
-      //     const filterData = (data) => {
-      //       const filteredData = data.filter((item, index, self) => {
-      //         // Check if item is unique
-      //         return (
-      //           index ===
-      //           self.findIndex(
-      //             (t) =>
-      //               t.tagName === item.tagName &&
-      //               t.children?.length === item.children?.length &&
-      //               t.innerText === item.innerText
-      //           )
-      //         );
-      //       });
-      //       return filteredData;
-      //     };
-
-      //     const filterResult = filterData(result);
-      //     return filterResult;
-      //   };
-
-      //   const e = getNodeElements(div);
-
-      //   // await page.locator("input").fill("value");
-
-      //   // console.log(" modal e : ", e);
-      //   console.log("");
-      //   console.log("");
-      //   console.log("");
-
-      //   let filteredData = e.map((curr) => {
-      //     const item = curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.innerText;
-      //     const price =
-      //       curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]?.children[0]
-      //         ?.innerText;
-      //     const info =
-      //       curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
-      //         ?.innerText;
-      //     const result = {
-      //       item: item,
-      //       price: price,
-      //       info: info,
-      //       option: [],
-      //     };
-      //     console.log("curr item  : ", curr);
-      //     console.log("curr result : ", result);
-      //     return result;
-      //   });
-
-      //   return filteredData;
-      // });
-      // console.log("");
-      // console.log("");
-      // console.log("");
-      // console.log("");
-      // console.log("");
-      // console.log("");
-      // console.log("scrapping Item data ", scrappingItemData);
-
-      // await page.waitForTimeout(5000);
-      // ! End scrapping item data --------------------------------------------------------
-
-      await page.waitForTimeout(10);
-
-      const getFieldElements = await page.$$("div[data-qa='modal']");
-      for (const filedElement of getFieldElements) {
-        //obtain text
-        const filedElementText = await (await filedElement.getProperty("textContent")).jsonValue();
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log("filedElementText : ", filedElementText);
-      }
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log(elementIndex, "t : ", t);
-      console.log("");
-      console.log("");
-      console.log("item : ", isExistOnScrapingMenuData(t).title);
     }
 
     await page.waitForTimeout(5);
   }
+  console.log(" complete the inbox with address");
   for (const element of getAllElement) {
     //obtain text
     const t = await (await element.getProperty("textContent")).jsonValue();
@@ -442,7 +250,25 @@ const run = async () => {
       elementIndex += 1;
       element.click();
       await page.waitForTimeout(200);
-
+      // ! Start fill teh address for first time --------------------------
+      // if (elementIndex === 1) {
+      //   try {
+      //     const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
+      //     const getInputElements = await page.$$("input[data-qa='location-panel-search-input-address-element-error']");
+      //     for (const input of getInputElements) {
+      //       await input.click();
+      //     }
+      //     await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
+      //     await page.waitForTimeout(2000);
+      //     const getAllClickedArea = await page.$$("div[data-qa='text']");
+      //     for (const addressText of getAllClickedArea) {
+      //       await addressText.click();
+      //     }
+      //   } catch (error) {
+      //     console.error("Error filling input:", error);
+      //   }
+      // }
+      // ! End fill teh address for first time --------------------------
       // ! Start scrapping item data --------------------------------------------------------
       const scrappingItemData = await page.evaluate(async () => {
         const div = document.querySelectorAll("div[data-qa='modal']");
@@ -551,43 +377,18 @@ const run = async () => {
             info: info,
             option: [],
           };
-          console.log("curr item  : ", curr);
-          console.log("curr result : ", result);
+          // console.log("curr item  : ", curr);
+          // console.log("curr result : ", result);
           return result;
         });
 
         return filteredData;
       });
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("scrapping Item data ", scrappingItemData);
 
       // await page.waitForTimeout(5000);
       // ! End scrapping item data --------------------------------------------------------
 
       await page.waitForTimeout(10);
-
-      const getFieldElements = await page.$$("div[data-qa='modal']");
-      for (const filedElement of getFieldElements) {
-        //obtain text
-        const filedElementText = await (await filedElement.getProperty("textContent")).jsonValue();
-        console.log("");
-        console.log("");
-        console.log("");
-        console.log("filedElementText : ", filedElementText);
-      }
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log("");
-      console.log(elementIndex, "t : ", t);
-      console.log("");
-      console.log("");
-      console.log("item : ", isExistOnScrapingMenuData(t).title);
     }
 
     await page.waitForTimeout(5);
