@@ -44,7 +44,7 @@ const run = async () => {
   // !  evaluate data for section header and set inside menuData
 
   const primeMenuData = await page.evaluate(async () => {
-    const smoothScrollToBottom = async () => {
+    async function smoothScrollToBottom() {
       let scrollPosition = 0;
       let documentHeight = document.body.scrollHeight;
 
@@ -65,7 +65,7 @@ const run = async () => {
         scrollPosition = targetPosition;
         documentHeight = document.body.scrollHeight;
       }
-    };
+    }
 
     await smoothScrollToBottom();
 
@@ -190,6 +190,7 @@ const run = async () => {
   const getAllElement = await page.$$("div[data-qa='flex']");
   console.log("getAllElement", JSON.stringify(getAllElement.length));
   let elementIndex = 0;
+  let addressElementIndex = 0;
   for (const element of getAllElement) {
     //obtain text
     const t = await (await element.getProperty("textContent")).jsonValue();
@@ -211,7 +212,7 @@ const run = async () => {
             await input.click();
           }
           await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
-          await page.waitForTimeout(20);
+          await page.waitForTimeout(2000);
           const getAllClickedArea = await page.$$("div[data-qa='text']");
           for (const addressText of getAllClickedArea) {
             await addressText.click();
@@ -245,7 +246,6 @@ const run = async () => {
 
     await page.waitForTimeout(5);
   }
-
   for (const element of getAllElement) {
     //obtain text
     const t = await (await element.getProperty("textContent")).jsonValue();
@@ -262,7 +262,6 @@ const run = async () => {
       // ! Start scrapping item data --------------------------------------------------------
       const scrappingItemData = await page.evaluate(async () => {
         const div = document.querySelectorAll("div[data-qa='modal']");
-
         const getNodeElements = (arrOfNodeElement) => {
           let filterElementNodes = [];
           for (const child of arrOfNodeElement) {
@@ -469,11 +468,11 @@ const run = async () => {
                             }
                           }
                           const newChild = {
-                            // childElementCount: filterChild.childElementCount,
+                            childElementCount: filterChild.childElementCount,
                             children: filterChild.children,
                             innerText: filterChild.innerText,
-                            // tagName: filterChild.tagName,
-                            // textContent: filterChild.textContent,
+                            tagName: filterChild.tagName,
+                            textContent: filterChild.textContent,
                           };
                           filterElementNodes.push({ ...newChild });
                         }
