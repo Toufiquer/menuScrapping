@@ -401,16 +401,12 @@ const run = async () => {
           };
 
           const item = getInnerText(curr, 0);
-          const price =
-            curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]?.children[0]
-              ?.innerText;
-          const info =
-            curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
-              ?.innerText;
+          const info = getInnerText(curr?.children[0]?.children[1]);
+          const price = getInnerText(getDataByTagName(curr, "h4")[0])?.split("£")[1];
           const result = {
             item: item,
-            price: "",
-            info: "",
+            price: price,
+            info: info,
             option: [],
           };
           return result;
