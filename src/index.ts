@@ -43,6 +43,15 @@ const run = async () => {
 
   console.log("Please wait... it takes about 5-6 minutes");
 
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
   // !  evaluate data for section header and set inside menuData
 
   // ! *****************************************************************************************************
@@ -101,7 +110,7 @@ const run = async () => {
             childElementCount: filterChild.childElementCount,
             children: filterChild.children,
             innerText: filterChild.innerText,
-            tagName: filterChild.tagName,
+            tagName: filterChild?.tagName,
             textContent: filterChild.textContent,
             selfNode: filterChild,
             classList: filterChild.classList,
@@ -131,7 +140,7 @@ const run = async () => {
       }
       const result = [];
       arrData.forEach((curr) => {
-        if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
+        if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
           result.push(curr);
         } else {
           if (curr?.children?.length > 0) {
@@ -147,7 +156,7 @@ const run = async () => {
             index ===
             self.findIndex(
               (t) =>
-                t.tagName === item.tagName &&
+                t?.tagName === item?.tagName &&
                 t.children?.length === item.children?.length &&
                 t.innerText === item.innerText
             )
@@ -294,9 +303,10 @@ const run = async () => {
       element.click();
       await page.waitForTimeout(200);
 
-      // ! Start scrapping item data --------------------------------------------------------
       const scrappingItemData = await page.evaluate(async () => {
+        // ! Start scrapping item data --------------------------------------------------------
         const div = document.querySelectorAll("div[data-qa='modal']");
+        const divItemChoices = document.querySelectorAll("div[data-qa='item-choices']");
 
         const getNodeElements = (arrOfNodeElement) => {
           let filterElementNodes = [];
@@ -319,7 +329,7 @@ const run = async () => {
                 childElementCount: filterChild.childElementCount,
                 children: filterChild.children,
                 innerText: filterChild.innerText,
-                tagName: filterChild.tagName,
+                tagName: filterChild?.tagName,
                 textContent: filterChild.textContent,
                 // selfNode: filterChild,
                 classList: filterChild.classList,
@@ -351,7 +361,7 @@ const run = async () => {
           }
           const result = [];
           arrData.forEach((curr) => {
-            if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
+            if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
               result.push(curr);
             } else {
               if (curr?.children?.length > 0) {
@@ -367,7 +377,7 @@ const run = async () => {
                 index ===
                 self.findIndex(
                   (t) =>
-                    t.tagName === item.tagName &&
+                    t?.tagName === item?.tagName &&
                     t.children?.length === item.children?.length &&
                     t.innerText === item.innerText
                 )
@@ -379,41 +389,89 @@ const run = async () => {
           const filterResult = filterData(result);
           return filterResult;
         };
-
-        const e = getNodeElements(div);
-
-        let filteredData = e.map((curr) => {
-          // console.log("");
-          // console.log("");
-          // console.log("");
-          // console.log("");
-          console.log("  inner curr : ", curr);
-
-          const getInnerText = (obj = { innerText: "", children: [] }, nthChild = 0) => {
-            if (obj.innerText.includes("\n")) {
-              if (obj.children?.length > 0) {
-                return getInnerText(obj.children[nthChild]);
-              } else {
-                return obj.innerText;
-              }
+        const getInnerText = (obj = { innerText: "", children: [] }, nthChild = 0) => {
+          if (obj.innerText?.includes("\n")) {
+            if (obj.children?.length > 0) {
+              return getInnerText(obj.children[nthChild]);
+            } else {
+              return obj.innerText;
             }
-            return obj.innerText;
-          };
+          }
+          return obj.innerText;
+        };
+        const nodeElementFromDiv = getNodeElements(div);
+        let optionElementFromDiv = getNodeElements(divItemChoices);
+        const getAllOptions = (curr) => {
+          // return options
+          return curr.children[0]?.children[0]?.children.map((options) => {
+            let newOptions = {};
+            const optionsName = getInnerText(options?.children[0]);
+            const optionsPrice = getInnerText(getDataByTagName(options?.children[1], "span"));
+            if (optionsName) {
+              newOptions.name = optionsName;
+            }
+            if (optionsPrice) {
+              newOptions.price = optionsPrice;
+            }
 
+            return newOptions;
+          });
+        };
+        console.log("optionElementFromDiv : ", optionElementFromDiv[0]?.children[0]?.children[0]?.children);
+        // return option
+        optionElementFromDiv = optionElementFromDiv[0]?.children[0]?.children[0]?.children?.map((curr) => {
+          console.log({ currentValue: curr });
+          let i = {};
+          const optionName = getInnerText(curr?.children[0]?.children[0]?.children[0]);
+          const optionFor = getInnerText(curr?.children[0]?.children[0]?.children[1]);
+          let requiredText = getInnerText(
+            curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
+              ?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
+          );
+          const isRequired = requiredText.includes("required");
+          let option = getAllOptions(curr);
+          option = option.filter((curr) => curr.name);
+          if (optionName) {
+            i.name = optionName;
+          }
+          if (optionFor) {
+            i.optionFor = optionFor;
+          }
+          if (isRequired) {
+            i.required = isRequired;
+          }
+          if (option.length > 0) {
+            console.log("option : ", option.length);
+            console.log("option : ", option);
+            i.option = option;
+          }
+          return i;
+        });
+        let filteredData = nodeElementFromDiv.map((curr) => {
           const item = getInnerText(curr, 0);
           const info = getInnerText(curr?.children[0]?.children[1]);
           const price = getInnerText(getDataByTagName(curr, "h4")[0])?.split("£")[1];
-          const result = {
-            item: item,
-            price: price,
-            info: info,
-            option: [],
-          };
+          let result = {};
+          result.item = item;
+          if (price) {
+            result.price = price;
+          }
+          if (info) {
+            result.info = info;
+          }
+          if (optionElementFromDiv) {
+            result.option = optionElementFromDiv;
+          }
           return result;
         });
-
+        console.log("filteredDate : ", filteredData);
+        // ! End scrapping item data --------------------------------------------------------
         return filteredData;
       });
+      console.log("");
+      console.log("");
+      console.log("");
+      console.log("scrappingItemData", scrappingItemData);
       // await page.waitForTimeout(2000);
       if (scrappingItemData?.length > 0) {
         scrapingMenuData = scrapingMenuData.map((mainItem) => {
@@ -439,7 +497,6 @@ const run = async () => {
         // itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
       }
       // await page.waitForTimeout(5000);
-      // ! End scrapping item data --------------------------------------------------------
 
       await page.waitForTimeout(10);
     }
@@ -451,6 +508,15 @@ const run = async () => {
   // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   // ! End Scrapping Inner data ----------------------------------
   await page.waitForTimeout(10);
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
+  // ! *****************************************************************************************************
   // await page.waitForTimeout(100000000);
 
   // ! copy from old data --------------------------------
@@ -475,7 +541,7 @@ const run = async () => {
           modalCount += 1;
           // ! check data for scraping or not
           const isExist = scrapingMenuData.find(
-            (curr) => curr.title === t.trim() && curr.innerSection.includes(divText.split("\n")[0])
+            (curr) => curr.title === t.trim() && curr.innerSection?.includes(divText.split("\n")[0])
           );
           if (isExist) {
             // ! open modal
@@ -588,7 +654,7 @@ const run = async () => {
                         .split("\n")
                         .map((i) => i.trim())
                         .filter((i) => i !== "")
-                        .filter((i) => ["0", "1", "2", "required"].includes(i));
+                        .filter((i) => ["0", "1", "2", "required"]?.includes(i));
                       const status1 = statusArr.find((i) => i === "1");
                       const status2 = statusArr.find((i) => i === "2");
                       const statusRequired = statusArr.find((i) => i === "required");
@@ -614,7 +680,7 @@ const run = async () => {
                       }
                       const result = [];
                       arrData.forEach((curr) => {
-                        if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
+                        if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
                           result.push(curr);
                         } else {
                           if (curr?.children?.length > 0) {
@@ -633,7 +699,7 @@ const run = async () => {
                           index ===
                           self.findIndex(
                             (t) =>
-                              t.tagName === item.tagName &&
+                              t?.tagName === item?.tagName &&
                               t.children?.length === item.children?.length &&
                               t.innerText === item.innerText &&
                               JSON.stringify(t.children) === JSON.stringify(item.children)
@@ -650,7 +716,7 @@ const run = async () => {
                         .filter((i) => i !== "")
                         .filter((i) => i !== "Make sure you pick all your options for this item. You’re almost there")
                         .filter((i) => i !== "There was a problem saving your changes, sorry. Please try again.")
-                        .filter((i) => !["0", "1", "2"].includes(i))
+                        .filter((i) => !["0", "1", "2"]?.includes(i))
                         .filter((i) => i.search("£") < 0);
                       const optionArr = getDataByTagName(data, "fieldset");
                       const filterOptionArr = filterData(optionArr);
@@ -715,7 +781,7 @@ const run = async () => {
                             childElementCount: filterChild.childElementCount,
                             children: filterChild.children,
                             innerText: filterChild.innerText,
-                            tagName: filterChild.tagName,
+                            tagName: filterChild?.tagName,
                             textContent: filterChild.textContent,
                           };
                           filterElementNodes.push({ ...newChild });
@@ -775,7 +841,7 @@ const run = async () => {
                         .split("\n")
                         .map((i) => i.trim())
                         .filter((i) => i !== "")
-                        .filter((i) => ["0", "1", "2", "required"].includes(i));
+                        .filter((i) => ["0", "1", "2", "required"]?.includes(i));
                       const status1 = statusArr.find((i) => i === "1");
                       const status2 = statusArr.find((i) => i === "2");
                       const statusRequired = statusArr.find((i) => i === "required");
@@ -801,7 +867,7 @@ const run = async () => {
                       }
                       const result = [];
                       arrData.forEach((curr) => {
-                        if (curr.tagName.toLowerCase() === tagName.toLowerCase()) {
+                        if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
                           result.push(curr);
                         } else {
                           if (curr?.children?.length > 0) {
@@ -820,7 +886,7 @@ const run = async () => {
                           index ===
                           self.findIndex(
                             (t) =>
-                              t.tagName === item.tagName &&
+                              t?.tagName === item?.tagName &&
                               t.children?.length === item.children?.length &&
                               t.innerText === item.innerText &&
                               JSON.stringify(t.children) === JSON.stringify(item.children)
@@ -837,7 +903,7 @@ const run = async () => {
                         .filter((i) => i !== "")
                         .filter((i) => i !== "Make sure you pick all your options for this item. You’re almost there")
                         .filter((i) => i !== "There was a problem saving your changes, sorry. Please try again.")
-                        .filter((i) => !["0", "1", "2"].includes(i))
+                        .filter((i) => !["0", "1", "2"]?.includes(i))
                         .filter((i) => i.search("£") < 0);
                       const optionArr = getDataByTagName(data, "fieldset");
                       const filterOptionArr = filterData(optionArr);
@@ -950,7 +1016,7 @@ const run = async () => {
             // ! save this newItem to menu data
             const remainingItems = scrapingMenuData.map((item) => {
               const menu = { ...item };
-              if (item.title === t.trim() && item.innerSection.includes(postScrapingData.item)) {
+              if (item.title === t.trim() && item.innerSection?.includes(postScrapingData.item)) {
                 menu.data.push(newItem);
               }
               return menu;
