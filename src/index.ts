@@ -16,12 +16,19 @@ const fs = require("fs");
 const rl = readline.createInterface({ input, output });
 
 const run = async () => {
+  let menuData = [];
+  let scrapingMenuData = [];
+  let itemScrappingMenuData = [];
+  let modalCount = 0;
+  let index = 0;
+
   const kitchen = "kitchen";
   const alias = "alias";
   const url = "https://www.just-eat.co.uk/restaurants-spice-fossway-tandoori-walker/menu";
 
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
+
   await page.setViewport({
     width: 1790,
     height: 1200,
@@ -29,20 +36,19 @@ const run = async () => {
     hasTouch: false,
     isMobile: false,
   });
+
   await page.goto(`${url}`);
+
   const sections = await page.$$("h2[data-qa='heading']");
-
-  let menuData = [];
-  let scrapingMenuData = [];
-  let itemScrappingMenuData = [];
-  let modalCount = 0;
-
-  let index = 0;
 
   console.log("Please wait... it takes about 5-6 minutes");
 
   // !  evaluate data for section header and set inside menuData
 
+  // ! *****************************************************************************************************
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   Start Scrapping the first menu [title, innerSection]
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   const primeMenuData = await page.evaluate(async () => {
     const smoothScrollToBottom = async () => {
       let scrollPosition = 0;
@@ -182,7 +188,9 @@ const run = async () => {
   });
 
   scrapingMenuData.push(...primeMenuData);
-
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   End Scrapping the first menu [title, innerSection]
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   // ! Start Scrapping Inner data ----------------------------------
   // const div = document.querySelectorAll("section[data-qa='item-category']");
   // ! Start Scrapping Inner data ----------------------------------
@@ -190,6 +198,10 @@ const run = async () => {
   const getAllElement = await page.$$("div[data-qa='flex']");
   console.log("getAllElement", JSON.stringify(getAllElement.length));
   let elementIndex = 0;
+  // ! *****************************************************************************************************
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   Start Fill the address
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   for (const element of getAllElement) {
     //obtain text
     const t = await (await element.getProperty("textContent")).jsonValue();
@@ -200,10 +212,10 @@ const run = async () => {
     };
     if (isExistOnScrapingMenuData(t)) {
       elementIndex += 1;
-      element.click();
-      await page.waitForTimeout(200);
       // ! Start fill teh address for first time --------------------------
       if (elementIndex === 1) {
+        element.click();
+        await page.waitForTimeout(200);
         try {
           const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
           const getInputElements = await page.$$("input[data-qa='location-panel-search-input-address-element-error']");
@@ -211,11 +223,15 @@ const run = async () => {
             await input.click();
           }
           await page.locator("input[data-qa='location-panel-search-input-address-element-error']").fill(address);
-          await page.waitForTimeout(20);
+          await page.waitForTimeout(20000);
+
+          console.log("\nLocation filled successfully");
           const getAllClickedArea = await page.$$("div[data-qa='text']");
           for (const addressText of getAllClickedArea) {
             await addressText.click();
           }
+          await page.waitForTimeout(20000);
+          console.log("\nLocation clicked successfully");
         } catch (error) {
           console.error("Error filling input:", error);
         }
@@ -246,15 +262,34 @@ const run = async () => {
     await page.waitForTimeout(5);
   }
 
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   End Fill the address
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! *****************************************************************************************************
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   Start Scrapping details menu
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  elementIndex = 0;
   for (const element of getAllElement) {
     //obtain text
     const t = await (await element.getProperty("textContent")).jsonValue();
-    const isExistOnScrapingMenuData = (checkingTitle: string) => {
+    const isExistOnInnerSection = (checkingTitle: string) => {
       return scrapingMenuData.find((mainItem) =>
-        mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
+        mainItem.innerSection.find((item: string) => item.toLowerCase() === checkingTitle.toLowerCase())
       );
     };
-    if (isExistOnScrapingMenuData(t)) {
+    const isExistOnData = (checkingTitle: string) => {
+      let result = true;
+      scrapingMenuData.forEach((mainItem) => {
+        mainItem.data.forEach((item) => {
+          if (item.item.toLowerCase() === checkingTitle.toLowerCase()) {
+            result = false;
+          }
+        });
+      });
+      return result;
+    };
+    if (isExistOnInnerSection(t) && isExistOnData(t)) {
       elementIndex += 1;
       element.click();
       await page.waitForTimeout(200);
@@ -352,18 +387,20 @@ const run = async () => {
           // console.log("");
           // console.log("");
           // console.log("");
-          // console.log("  inner curr : ", curr);
-          return curr;
-          const a = {
-            childElementCount: curr.childElementCount,
-            children: curr.children,
-            innerText: curr.innerText,
-            tagName: curr.tagName,
-            textContent: curr.textContent,
-            classList: curr.classList,
+          console.log("  inner curr : ", curr);
+
+          const getInnerText = (obj = { innerText: "", children: [] }, nthChild = 0) => {
+            if (obj.innerText.includes("\n")) {
+              if (obj.children?.length > 0) {
+                return getInnerText(obj.children[nthChild]);
+              } else {
+                return obj.innerText;
+              }
+            }
+            return obj.innerText;
           };
 
-          const item = curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.innerText;
+          const item = getInnerText(curr, 0);
           const price =
             curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]?.children[0]
               ?.innerText;
@@ -372,8 +409,8 @@ const run = async () => {
               ?.innerText;
           const result = {
             item: item,
-            price: price,
-            info: info,
+            price: "",
+            info: "",
             option: [],
           };
           return result;
@@ -383,7 +420,27 @@ const run = async () => {
       });
       // await page.waitForTimeout(2000);
       if (scrappingItemData?.length > 0) {
-        itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
+        scrapingMenuData = scrapingMenuData.map((mainItem) => {
+          const i = { ...mainItem };
+          i.checking = [];
+          const isExistInInnerSection = i.innerSection.find((item) => item.toLowerCase() === t.toLowerCase());
+          if (isExistInInnerSection) {
+            const isAlreadyExist = i.data.find((item) => {
+              return item.item?.toLowerCase() === scrappingItemData.item?.toLowerCase();
+            });
+            if (!isAlreadyExist) {
+              i.checking.push({
+                "item.item": scrappingItemData.item,
+                isAlreadyExist: isAlreadyExist,
+                t: t.toLowerCase(),
+                "scrappingItemData.item": scrappingItemData.item?.toLowerCase(),
+              });
+              i.data.push(...scrappingItemData);
+            }
+          }
+          return i;
+        });
+        // itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
       }
       // await page.waitForTimeout(5000);
       // ! End scrapping item data --------------------------------------------------------
@@ -393,6 +450,9 @@ const run = async () => {
 
     await page.waitForTimeout(5);
   }
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   End Scrapping details menu
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   // ! End Scrapping Inner data ----------------------------------
   await page.waitForTimeout(10);
   // await page.waitForTimeout(100000000);
@@ -978,4 +1038,5 @@ const run = async () => {
 
   rl.close();
 };
+
 run();
