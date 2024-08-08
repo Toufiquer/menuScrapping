@@ -17,11 +17,7 @@ const rl = readline.createInterface({ input, output });
 
 const run = async () => {
   let menuData = [];
-  let allMenuData = [];
-  let allMenuTitlePre = [];
-  let allMenuTitleChecked = [];
   let scrapingMenuData = [];
-  let itemScrappingMenuData = [];
   let modalCount = 0;
   let index = 0;
 
@@ -283,36 +279,260 @@ const run = async () => {
   // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   // ! --------   Start Scrapping details menu
   // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  // elementIndex = 0;
-  // for (const element of getAllElement) {
-  //   //obtain text
-  //   const t = await (await element.getProperty("textContent")).jsonValue();
-  //   const isExistOnInnerSection = (checkingTitle: string) => {
+  elementIndex = 0;
+  for (const element of getAllElement) {
+    //obtain text
+    const t = await (await element.getProperty("textContent")).jsonValue();
+    const isExistOnInnerSection = (checkingTitle: string) => {
+      return scrapingMenuData.find((mainItem) =>
+        mainItem.innerSection.find((item: string) => item.toLowerCase() === checkingTitle.toLowerCase())
+      );
+    };
+    const isExistOnData = (checkingTitle: string) => {
+      let result = true;
+      scrapingMenuData.forEach((mainItem) => {
+        mainItem.data.forEach((item) => {
+          if (item.item.toLowerCase() === checkingTitle.toLowerCase()) {
+            result = false;
+          }
+        });
+      });
+      return result;
+    };
+    if (isExistOnInnerSection(t) && isExistOnData(t)) {
+      elementIndex += 1;
+      // ! Open modal
+      await element.click();
+      await page.waitForTimeout(200);
+
+      const scrappingItemData = await page.evaluate(async () => {
+        // ! Start scrapping item data --------------------------------------------------------
+        const div = document.querySelectorAll("div[data-qa='modal']");
+        const divItemChoices = document.querySelectorAll("div[data-qa='item-choices']");
+
+        const getNodeElements = (arrOfNodeElement) => {
+          let filterElementNodes = [];
+          for (const child of arrOfNodeElement) {
+            if (child.nodeType !== 8) {
+              // This filters out comments (nodeType 8)
+              const filterChild = {
+                childElementCount: "",
+                children: "",
+                innerText: "",
+                tagName: "",
+                textContent: "",
+              };
+              for (const c in child) {
+                if (child[c] !== null) {
+                  filterChild[c] = child[c];
+                }
+              }
+              const newChild = {
+                childElementCount: filterChild.childElementCount,
+                children: filterChild.children,
+                innerText: filterChild.innerText,
+                tagName: filterChild?.tagName,
+                textContent: filterChild.textContent,
+                // selfNode: filterChild,
+                classList: filterChild.classList,
+              };
+              filterElementNodes.push({ ...newChild });
+            }
+          }
+          //   clear child nodes by self invoked
+          filterElementNodes = filterElementNodes.map((curr) => {
+            if (curr.childElementCount > 0) {
+              const filterChildren = getNodeElements(curr.children);
+              return {
+                ...curr,
+                children: filterChildren,
+              };
+            } else {
+              return curr;
+            }
+          });
+          return filterElementNodes
+            .filter((curr) => curr.innerText !== "")
+            .filter((curr) => curr.innerText !== undefined);
+        };
+
+        const getDataByTagName = (data, tagName = "") => {
+          let arrData = Array.isArray(data) ? data : [data];
+          if (tagName === "") {
+            return arrData;
+          }
+          const result = [];
+          arrData.forEach((curr) => {
+            if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
+              result.push(curr);
+            } else {
+              if (curr?.children?.length > 0) {
+                const findInnerData = getDataByTagName([...curr.children], tagName);
+                result.push(...findInnerData);
+              }
+            }
+          });
+          const filterData = (data) => {
+            const filteredData = data.filter((item, index, self) => {
+              // Check if item is unique
+              return (
+                index ===
+                self.findIndex(
+                  (t) =>
+                    t?.tagName === item?.tagName &&
+                    t.children?.length === item.children?.length &&
+                    t.innerText === item.innerText
+                )
+              );
+            });
+            return filteredData;
+          };
+
+          const filterResult = filterData(result);
+          return filterResult;
+        };
+        const getInnerText = (obj = { innerText: "", children: [] }, nthChild = 0) => {
+          if (obj.innerText?.includes("\n")) {
+            if (obj.children?.length > 0) {
+              return getInnerText(obj.children[nthChild]);
+            } else {
+              return obj.innerText;
+            }
+          }
+          return obj.innerText;
+        };
+        const nodeElementFromDiv = getNodeElements(div);
+        let optionElementFromDiv = getNodeElements(divItemChoices);
+        const getAllOptions = (curr) => {
+          // return options
+          return curr.children[0]?.children[0]?.children.map((options) => {
+            let newOptions = {};
+            const optionsName = getInnerText(options?.children[0]);
+            const optionsPrice = getInnerText(getDataByTagName(options?.children[1], "span"));
+            if (optionsName) {
+              newOptions.name = optionsName;
+            }
+            if (optionsPrice) {
+              newOptions.price = optionsPrice;
+            }
+
+            return newOptions;
+          });
+        };
+
+        // return option
+        optionElementFromDiv = optionElementFromDiv[0]?.children[0]?.children[0]?.children?.map((curr) => {
+          let i = {};
+          const optionName = getInnerText(curr?.children[0]?.children[0]?.children[0]);
+          const optionFor = getInnerText(curr?.children[0]?.children[0]?.children[1]);
+          let requiredText = getInnerText(
+            curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
+              ?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
+          );
+          const isRequired = requiredText.includes("required");
+          let option = getAllOptions(curr);
+          option = option.filter((curr) => curr.name);
+          if (optionName) {
+            i.name = optionName;
+          }
+          if (optionFor) {
+            i.optionFor = optionFor;
+          }
+          if (isRequired) {
+            i.required = isRequired;
+          }
+          if (option.length > 0) {
+            i.option = option;
+          }
+          return i;
+        });
+        let filteredData = nodeElementFromDiv.map((curr) => {
+          const item = getInnerText(curr, 0);
+          const info = getInnerText(curr?.children[0]?.children[1]);
+          const price = getInnerText(getDataByTagName(curr, "h4")[0])?.split("£")[1];
+          let result = {};
+          result.item = item;
+          if (price) {
+            result.price = price;
+          }
+          if (info) {
+            result.info = info;
+          }
+          // if (optionElementFromDiv) {
+          //   result.option = optionElementFromDiv;
+          // }
+          return result;
+        });
+        // ! End scrapping item data --------------------------------------------------------
+        return filteredData;
+        // return [...new Set(filteredData.map((curr) => curr.item))];
+      });
+      // await page.waitForTimeout(2000);
+      if (scrappingItemData?.length > 0) {
+        scrapingMenuData = scrapingMenuData.map((mainItem) => {
+          const i = { ...mainItem };
+          i.checking = [];
+          const isExistInInnerSection = i.innerSection.find((item) => item.toLowerCase() === t.toLowerCase());
+          if (isExistInInnerSection) {
+            const isAlreadyExist = i.data.find((item) => {
+              return item.item?.toLowerCase() === scrappingItemData.item?.toLowerCase();
+            });
+            if (!isAlreadyExist) {
+              i.data.push(...scrappingItemData);
+            }
+          }
+          return i;
+        });
+        // itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
+      }
+      // await page.waitForTimeout(5000);
+
+      await page.waitForTimeout(10);
+      // ! Close modal
+      const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
+      for (let closeBtn of closeButton) {
+        await closeBtn.click();
+        await page.waitForTimeout(100);
+      }
+      await page.waitForTimeout(10);
+    }
+
+    await page.waitForTimeout(5);
+  }
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   End Scrapping details menu
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+  // ! *****************************************************************************************************
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  // ! --------   Start Scrapping Test
+  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+  // Click on each section element
+  // const getAllElement2 = await page.$$("div[data-qa='flex']");
+  // let indexAllElements = 0;
+  // for (let i of getAllElement2) {
+  //   indexAllElements += 1;
+  //   const t = await (await i.getProperty("textContent")).jsonValue();
+  //   console.log("");
+  //   console.log("");
+  //   await page.waitForTimeout(100);
+  //   const isExistOnScrapingMenuData = (checkingTitle: string) => {
   //     return scrapingMenuData.find((mainItem) =>
-  //       mainItem.innerSection.find((item: string) => item.toLowerCase() === checkingTitle.toLowerCase())
+  //       mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
   //     );
   //   };
-  //   const isExistOnData = (checkingTitle: string) => {
-  //     let result = true;
-  //     scrapingMenuData.forEach((mainItem) => {
-  //       mainItem.data.forEach((item) => {
-  //         if (item.item.toLowerCase() === checkingTitle.toLowerCase()) {
-  //           result = false;
-  //         }
-  //       });
-  //     });
-  //     return result;
-  //   };
-  //   if (isExistOnInnerSection(t) && isExistOnData(t)) {
-  //     elementIndex += 1;
-  //    await element.click();
-  //     await page.waitForTimeout(200);
+  //   allMenuTitlePre.push(t);
+  //   if (isExistOnScrapingMenuData(t)) {
+  //     await page.waitForTimeout(100);
+  //     console.log("open modal : ", t);
+  //     await i.click();
+  //     await page.waitForTimeout(2000);
 
-  //     const scrappingItemData = await page.evaluate(async () => {
+  //     const scrappingItemDataInnerText = await page.evaluate(async () => {
   //       // ! Start scrapping item data --------------------------------------------------------
   //       const div = document.querySelectorAll("div[data-qa='modal']");
   //       const divItemChoices = document.querySelectorAll("div[data-qa='item-choices']");
-
   //       const getNodeElements = (arrOfNodeElement) => {
   //         let filterElementNodes = [];
   //         for (const child of arrOfNodeElement) {
@@ -358,7 +578,6 @@ const run = async () => {
   //           .filter((curr) => curr.innerText !== "")
   //           .filter((curr) => curr.innerText !== undefined);
   //       };
-
   //       const getDataByTagName = (data, tagName = "") => {
   //         let arrData = Array.isArray(data) ? data : [data];
   //         if (tagName === "") {
@@ -390,7 +609,6 @@ const run = async () => {
   //           });
   //           return filteredData;
   //         };
-
   //         const filterResult = filterData(result);
   //         return filterResult;
   //       };
@@ -418,11 +636,9 @@ const run = async () => {
   //           if (optionsPrice) {
   //             newOptions.price = optionsPrice;
   //           }
-
   //           return newOptions;
   //         });
   //       };
-
   //       // return option
   //       optionElementFromDiv = optionElementFromDiv[0]?.children[0]?.children[0]?.children?.map((curr) => {
   //         let i = {};
@@ -470,263 +686,45 @@ const run = async () => {
   //       return filteredData;
   //       // return [...new Set(filteredData.map((curr) => curr.item))];
   //     });
-  //     // await page.waitForTimeout(2000);
-  //     if (scrappingItemData?.length > 0) {
-  //       scrapingMenuData = scrapingMenuData.map((mainItem) => {
+
+  //     allMenuTitleChecked.push({ title: t, data: scrappingItemDataInnerText });
+  //     if (scrappingItemDataInnerText?.length > 0) {
+  //       allMenuData = scrapingMenuData.map((mainItem) => {
   //         const i = { ...mainItem };
   //         i.checking = [];
   //         const isExistInInnerSection = i.innerSection.find((item) => item.toLowerCase() === t.toLowerCase());
   //         if (isExistInInnerSection) {
   //           const isAlreadyExist = i.data.find((item) => {
-  //             return item.item?.toLowerCase() === scrappingItemData.item?.toLowerCase();
+  //             return item.item?.toLowerCase() === scrappingItemDataInnerText.item?.toLowerCase();
   //           });
   //           if (!isAlreadyExist) {
   //             i.checking.push({
-  //               "item.item": scrappingItemData.item,
+  //               "item.item": scrappingItemDataInnerText.item,
   //               isAlreadyExist: isAlreadyExist,
   //               t: t.toLowerCase(),
-  //               "scrappingItemData.item": scrappingItemData.item?.toLowerCase(),
+  //               "scrappingItemDataInnerText.item": scrappingItemDataInnerText.item?.toLowerCase(),
   //             });
-  //             i.data.push(...scrappingItemData);
+  //             i.data.push(...scrappingItemDataInnerText);
   //           }
   //         }
   //         return i;
   //       });
   //       // itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
   //     }
-  //     // await page.waitForTimeout(5000);
+  //     const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
+  //     for (let closeBtn of closeButton) {
+  //       await closeBtn.click();
+  //       await page.waitForTimeout(100);
+  //     }
+  //     console.log("scrapping data form modal; index : ", indexAllElements);
+  //     console.log("closed modal : ", t);
+  //     console.log("");
+  //     console.log("");
 
-  //     await page.waitForTimeout(10);
+  //     // console.log("scrappingItemDataInnerText : ", scrappingItemDataInnerText);
+  //     // console.log("i : ", i);
   //   }
-
-  //   await page.waitForTimeout(5);
   // }
-  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  // ! --------   End Scrapping details menu
-  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-  // ! *****************************************************************************************************
-  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  // ! --------   Start Scrapping Test
-  // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-  // Click on each section element
-  const getAllElement2 = await page.$$("div[data-qa='flex']");
-  let indexAllElements = 0;
-  for (let i of getAllElement2) {
-    indexAllElements += 1;
-    const t = await (await i.getProperty("textContent")).jsonValue();
-    console.log("");
-    console.log("");
-    await page.waitForTimeout(100);
-    const isExistOnScrapingMenuData = (checkingTitle: string) => {
-      return scrapingMenuData.find((mainItem) =>
-        mainItem.innerSection.find((item: string) => item.toLocaleLowerCase() === checkingTitle.toLocaleLowerCase())
-      );
-    };
-    allMenuTitlePre.push(t);
-    if (isExistOnScrapingMenuData(t)) {
-      await page.waitForTimeout(100);
-      console.log("open modal : ", t);
-      await i.click();
-      await page.waitForTimeout(2000);
-
-      const scrappingItemDataInnerText = await page.evaluate(async () => {
-        // ! Start scrapping item data --------------------------------------------------------
-        const div = document.querySelectorAll("div[data-qa='modal']");
-        const divItemChoices = document.querySelectorAll("div[data-qa='item-choices']");
-        const getNodeElements = (arrOfNodeElement) => {
-          let filterElementNodes = [];
-          for (const child of arrOfNodeElement) {
-            if (child.nodeType !== 8) {
-              // This filters out comments (nodeType 8)
-              const filterChild = {
-                childElementCount: "",
-                children: "",
-                innerText: "",
-                tagName: "",
-                textContent: "",
-              };
-              for (const c in child) {
-                if (child[c] !== null) {
-                  filterChild[c] = child[c];
-                }
-              }
-              const newChild = {
-                childElementCount: filterChild.childElementCount,
-                children: filterChild.children,
-                innerText: filterChild.innerText,
-                tagName: filterChild?.tagName,
-                textContent: filterChild.textContent,
-                // selfNode: filterChild,
-                classList: filterChild.classList,
-              };
-              filterElementNodes.push({ ...newChild });
-            }
-          }
-          //   clear child nodes by self invoked
-          filterElementNodes = filterElementNodes.map((curr) => {
-            if (curr.childElementCount > 0) {
-              const filterChildren = getNodeElements(curr.children);
-              return {
-                ...curr,
-                children: filterChildren,
-              };
-            } else {
-              return curr;
-            }
-          });
-          return filterElementNodes
-            .filter((curr) => curr.innerText !== "")
-            .filter((curr) => curr.innerText !== undefined);
-        };
-        const getDataByTagName = (data, tagName = "") => {
-          let arrData = Array.isArray(data) ? data : [data];
-          if (tagName === "") {
-            return arrData;
-          }
-          const result = [];
-          arrData.forEach((curr) => {
-            if (curr?.tagName.toLowerCase() === tagName.toLowerCase()) {
-              result.push(curr);
-            } else {
-              if (curr?.children?.length > 0) {
-                const findInnerData = getDataByTagName([...curr.children], tagName);
-                result.push(...findInnerData);
-              }
-            }
-          });
-          const filterData = (data) => {
-            const filteredData = data.filter((item, index, self) => {
-              // Check if item is unique
-              return (
-                index ===
-                self.findIndex(
-                  (t) =>
-                    t?.tagName === item?.tagName &&
-                    t.children?.length === item.children?.length &&
-                    t.innerText === item.innerText
-                )
-              );
-            });
-            return filteredData;
-          };
-          const filterResult = filterData(result);
-          return filterResult;
-        };
-        const getInnerText = (obj = { innerText: "", children: [] }, nthChild = 0) => {
-          if (obj.innerText?.includes("\n")) {
-            if (obj.children?.length > 0) {
-              return getInnerText(obj.children[nthChild]);
-            } else {
-              return obj.innerText;
-            }
-          }
-          return obj.innerText;
-        };
-        const nodeElementFromDiv = getNodeElements(div);
-        let optionElementFromDiv = getNodeElements(divItemChoices);
-        const getAllOptions = (curr) => {
-          // return options
-          return curr.children[0]?.children[0]?.children.map((options) => {
-            let newOptions = {};
-            const optionsName = getInnerText(options?.children[0]);
-            const optionsPrice = getInnerText(getDataByTagName(options?.children[1], "span"));
-            if (optionsName) {
-              newOptions.name = optionsName;
-            }
-            if (optionsPrice) {
-              newOptions.price = optionsPrice;
-            }
-            return newOptions;
-          });
-        };
-        // return option
-        optionElementFromDiv = optionElementFromDiv[0]?.children[0]?.children[0]?.children?.map((curr) => {
-          let i = {};
-          const optionName = getInnerText(curr?.children[0]?.children[0]?.children[0]);
-          const optionFor = getInnerText(curr?.children[0]?.children[0]?.children[1]);
-          let requiredText = getInnerText(
-            curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
-              ?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
-          );
-          const isRequired = requiredText.includes("required");
-          let option = getAllOptions(curr);
-          option = option.filter((curr) => curr.name);
-          if (optionName) {
-            i.name = optionName;
-          }
-          if (optionFor) {
-            i.optionFor = optionFor;
-          }
-          if (isRequired) {
-            i.required = isRequired;
-          }
-          if (option.length > 0) {
-            i.option = option;
-          }
-          return i;
-        });
-        let filteredData = nodeElementFromDiv.map((curr) => {
-          const item = getInnerText(curr, 0);
-          const info = getInnerText(curr?.children[0]?.children[1]);
-          const price = getInnerText(getDataByTagName(curr, "h4")[0])?.split("£")[1];
-          let result = {};
-          result.item = item;
-          if (price) {
-            result.price = price;
-          }
-          if (info) {
-            result.info = info;
-          }
-          if (optionElementFromDiv) {
-            result.option = optionElementFromDiv;
-          }
-          return result;
-        });
-        // ! End scrapping item data --------------------------------------------------------
-        return filteredData;
-        // return [...new Set(filteredData.map((curr) => curr.item))];
-      });
-
-      allMenuTitleChecked.push({ title: t, data: scrappingItemDataInnerText });
-      if (scrappingItemDataInnerText?.length > 0) {
-        allMenuData = scrapingMenuData.map((mainItem) => {
-          const i = { ...mainItem };
-          i.checking = [];
-          const isExistInInnerSection = i.innerSection.find((item) => item.toLowerCase() === t.toLowerCase());
-          if (isExistInInnerSection) {
-            const isAlreadyExist = i.data.find((item) => {
-              return item.item?.toLowerCase() === scrappingItemDataInnerText.item?.toLowerCase();
-            });
-            if (!isAlreadyExist) {
-              i.checking.push({
-                "item.item": scrappingItemDataInnerText.item,
-                isAlreadyExist: isAlreadyExist,
-                t: t.toLowerCase(),
-                "scrappingItemDataInnerText.item": scrappingItemDataInnerText.item?.toLowerCase(),
-              });
-              i.data.push(...scrappingItemDataInnerText);
-            }
-          }
-          return i;
-        });
-        // itemScrappingMenuData.push({ title: t, data: { ...scrappingItemData } });
-      }
-      const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
-      for (let closeBtn of closeButton) {
-        await closeBtn.click();
-        await page.waitForTimeout(100);
-      }
-      console.log("scrapping data form modal; index : ", indexAllElements);
-      console.log("closed modal : ", t);
-      console.log("");
-      console.log("");
-
-      // console.log("scrappingItemDataInnerText : ", scrappingItemDataInnerText);
-      // console.log("i : ", i);
-    }
-  }
 
   // ! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   // ! --------   End Scrapping Test
@@ -1304,42 +1302,6 @@ const run = async () => {
       return;
     }
     console.log("Data saved to menu.json");
-  });
-  fs.writeFile("scrapingMenuData-v2.json", JSON.stringify(scrapingMenuData), (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("Data saved to scrapingMenuData-v2.json");
-  });
-
-  fs.writeFile("itemScrappingMenuData-v2.json", JSON.stringify(itemScrappingMenuData), (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("Data saved to itemScrappingMenuData-v2.json");
-  });
-  fs.writeFile("allMenuData-v2.json", JSON.stringify(allMenuData), (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("Data saved to allMenuData-v2.json");
-  });
-  fs.writeFile("allMenuTitlePre-v2.json", JSON.stringify(allMenuTitlePre), (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("Data saved to allMenuTitlePre-v2.json");
-  });
-  fs.writeFile("allMenuTitleChecked-v2.json", JSON.stringify(allMenuTitleChecked), (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("Data saved to allMenuTitleChecked-v2.json");
   });
 
   await browser.close();
