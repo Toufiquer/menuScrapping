@@ -526,6 +526,7 @@ const run = async () => {
       // await page.waitForTimeout(5000);
 
       await page.waitForTimeout(10);
+      let clickedCount = 0;
       // ! Close modal [if the modal has no image]
       const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
       const closeButtonIcon = await page.$$("span[data-qa='icon-button']");
@@ -534,14 +535,19 @@ const run = async () => {
           await closeBtn.click();
           await page.waitForTimeout(100);
         }
+        clickedCount += 1;
+      } else if (closeButtonIcon.length > 0) {
+        // ! Close modal [if the modal has image]
+        for (let closeBtn of closeButtonIcon) {
+          await page.waitForTimeout(100);
+
+          if (clickedCount === 0) {
+            await closeBtn.click();
+          }
+          clickedCount += 1;
+          await page.waitForTimeout(100);
+        }
       }
-      // ! Close modal [if the modal has image]
-      // else if (closeButtonIcon.length > 0) {
-      //   for (let closeBtn of closeButtonIcon) {
-      //     await closeBtn.click();
-      //     await page.waitForTimeout(100);
-      //   }
-      // }
       await page.waitForTimeout(10);
     }
 

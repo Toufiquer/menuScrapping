@@ -1,26 +1,6 @@
 {
-  "popular": {
-    "srl": 1,
-    "lst": "No data found for category \"popular\""
-  },
-  "£23.95": {
-    "srl": 2,
-    "lst": "No data found for category \"£23.95\""
-  },
-  "from_£6.95": {
-    "srl": 6,
-    "lst": "No data found for category \"from_£6.95\""
-  },
-  "£16.95": {
-    "srl": 4,
-    "lst": "No data found for category \"£16.95\""
-  },
-  "£28.95": {
-    "srl": 5,
-    "lst": "No data found for category \"£28.95\""
-  },
   "set_meals": {
-    "srl": 7,
+    "srl": 1,
     "lst": [
       {
         "item": "Set Meal for One Person",
@@ -46,44 +26,59 @@
         "item": "Munchie Box Two",
         "price": "23.95",
         "info": "1"
+      },
+      {
+        "item": "Any Curry Sauce & Chips",
+        "price": "5.50",
+        "info": "£5.50"
+      },
+      {
+        "item": "Any Chicken Curry with Rice & Chips",
+        "price": "6.50",
+        "info": "All in One Container"
       }
     ]
   },
   "set_meal_for_one_person": {
-    "srl": 8,
+    "srl": 2,
     "lst": "No data found for category \"set_meal_for_one_person\""
   },
   "set_meal_for_two_person": {
-    "srl": 9,
+    "srl": 3,
     "lst": "No data found for category \"set_meal_for_two_person\""
   },
   "special_thali": {
-    "srl": 10,
+    "srl": 4,
     "lst": "No data found for category \"special_thali\""
   },
   "munchie_box_one": {
-    "srl": 11,
+    "srl": 5,
     "lst": "No data found for category \"munchie_box_one\""
   },
   "munchie_box_two": {
-    "srl": 12,
+    "srl": 6,
     "lst": "No data found for category \"munchie_box_two\""
   },
   "any_curry_sauce_&_chips": {
-    "srl": 13,
+    "srl": 7,
     "lst": "No data found for category \"any_curry_sauce_&_chips\""
   },
   "any_chicken_curry_with_rice_&_chips": {
-    "srl": 14,
+    "srl": 8,
     "lst": "No data found for category \"any_chicken_curry_with_rice_&_chips\""
   },
   "starters": {
-    "srl": 15,
+    "srl": 9,
     "lst": [
       {
-        "item": "Munchie Box Two",
-        "price": "23.95",
-        "info": "1"
+        "item": "Chicken Chaat Starter",
+        "price": "3.95",
+        "info": "Mashed Chicken served with a Puri"
+      },
+      {
+        "item": "Tikka Chaat Starter",
+        "price": "3.95",
+        "info": "Marinated Chicken Tikka served with a Puri"
       },
       {
         "item": "Onion Bhaji",
@@ -128,48 +123,53 @@
     ]
   },
   "chicken_chaat_starter": {
-    "srl": 16,
+    "srl": 10,
     "lst": "No data found for category \"chicken_chaat_starter\""
   },
   "tikka_chaat_starter": {
-    "srl": 17,
+    "srl": 11,
     "lst": "No data found for category \"tikka_chaat_starter\""
   },
   "onion_bhaji": {
-    "srl": 18,
+    "srl": 12,
     "lst": "No data found for category \"onion_bhaji\""
   },
   "vegetable_pakora_starter": {
-    "srl": 19,
+    "srl": 13,
     "lst": "No data found for category \"vegetable_pakora_starter\""
   },
   "samosas_(mean_or_vegetable)": {
-    "srl": 20,
+    "srl": 14,
     "lst": "No data found for category \"samosas_(mean_or_vegetable)\""
   },
   "prawn_cocktail_starter": {
-    "srl": 21,
+    "srl": 15,
     "lst": "No data found for category \"prawn_cocktail_starter\""
   },
   "bhuna_prawn_on_puri": {
-    "srl": 22,
+    "srl": 16,
     "lst": "No data found for category \"bhuna_prawn_on_puri\""
   },
   "bhuna_chicken_on_puri": {
-    "srl": 23,
+    "srl": 17,
     "lst": "No data found for category \"bhuna_chicken_on_puri\""
   },
   "chicken_pakora_starter": {
-    "srl": 24,
+    "srl": 18,
     "lst": "No data found for category \"chicken_pakora_starter\""
   },
   "tandoori_starters": {
-    "srl": 25,
+    "srl": 19,
     "lst": [
       {
         "item": "Chicken Tikka Tandoori Starter",
         "price": "3.95",
         "info": "1"
+      },
+      {
+        "item": "Lamb Tikka Tandoori Starter",
+        "price": "4.50",
+        "info": "£4.50"
       },
       {
         "item": "Seekh Kebab Tandoori Starter",
@@ -214,7 +214,7 @@
     ]
   },
   "tandoori_masala_dishes": {
-    "srl": 26,
+    "srl": 20,
     "lst": [
       {
         "item": "Tandoori Chicken Tikka Masala",
@@ -249,7 +249,7 @@
     ]
   },
   "tandoori_grilled_dishes": {
-    "srl": 27,
+    "srl": 21,
     "lst": [
       {
         "item": "Chicken Tandoori Grilled Dish",
@@ -289,7 +289,7 @@
     ]
   },
   "biryani_dishes": {
-    "srl": 28,
+    "srl": 22,
     "lst": [
       {
         "item": "Chicken Biryani",
@@ -324,7 +324,7 @@
     ]
   },
   "traditional_curry_dishes": {
-    "srl": 29,
+    "srl": 23,
     "lst": [
       {
         "item": "Masala",
@@ -429,7 +429,7 @@
     ]
   },
   "chefs_speciality_dishes": {
-    "srl": 30,
+    "srl": 24,
     "lst": [
       {
         "item": "Makani",
@@ -499,7 +499,7 @@
     ]
   },
   "parmesan": {
-    "srl": 31,
+    "srl": 25,
     "lst": [
       {
         "item": "Cheesy Parmesan",
@@ -519,7 +519,7 @@
     ]
   },
   "burgers": {
-    "srl": 32,
+    "srl": 26,
     "lst": [
       {
         "item": "Cheesy Burger Single",
@@ -564,7 +564,7 @@
     ]
   },
   "bread": {
-    "srl": 33,
+    "srl": 27,
     "lst": [
       {
         "item": "Plain Naan",
@@ -654,7 +654,7 @@
     ]
   },
   "rice_dishes": {
-    "srl": 34,
+    "srl": 28,
     "lst": [
       {
         "item": "Plain Pilau Rice",
@@ -744,7 +744,7 @@
     ]
   },
   "side_dishes": {
-    "srl": 35,
+    "srl": 29,
     "lst": [
       {
         "item": "Mushroom Bhaji",
@@ -804,7 +804,7 @@
     ]
   },
   "sundries": {
-    "srl": 36,
+    "srl": 30,
     "lst": [
       {
         "item": "Chips",
@@ -889,7 +889,7 @@
     ]
   },
   "english_dishes": {
-    "srl": 37,
+    "srl": 31,
     "lst": [
       {
         "item": "Prawn Omelette",
@@ -934,7 +934,7 @@
     ]
   },
   "soft_drinks": {
-    "srl": 38,
+    "srl": 32,
     "lst": [
       {
         "item": "Coca Cola 330ml",
@@ -942,9 +942,29 @@
         "info": "1"
       },
       {
+        "item": "Diet Coca Cola 330ml",
+        "price": "1.00",
+        "info": "1"
+      },
+      {
         "item": "Pepsi 330ml",
         "price": "1.00",
         "info": "1"
+      },
+      {
+        "item": "Diet Pepsi 330ml",
+        "price": "1.00",
+        "info": "1"
+      },
+      {
+        "item": "Fanta Orange 330ml",
+        "price": "1.00",
+        "info": "1"
+      },
+      {
+        "item": "Bottle of Water 500ml",
+        "price": "1.00",
+        "info": "Brand may vary."
       },
       {
         "item": "2 Bottles of Water 500ml",
@@ -957,15 +977,35 @@
         "info": "1"
       },
       {
+        "item": "Diet Coca Cola 1.25l",
+        "price": "2.95",
+        "info": "1"
+      },
+      {
         "item": "Pepsi 1.5l",
         "price": "2.95",
         "info": "1"
+      },
+      {
+        "item": "Diet Pepsi 1.5l",
+        "price": "2.95",
+        "info": "1"
+      },
+      {
+        "item": "Fanta Orange 1.5l",
+        "price": "2.95",
+        "info": "£2.95"
       }
     ]
   },
   "desserts": {
-    "srl": 39,
+    "srl": 33,
     "lst": [
+      {
+        "item": "Cheesecake",
+        "price": "2.95",
+        "info": "Flavours Vary"
+      },
       {
         "item": "Chocolate Cake",
         "price": "2.95",
@@ -974,7 +1014,7 @@
     ]
   },
   "pizzas": {
-    "srl": 40,
+    "srl": 34,
     "lst": [
       {
         "item": "Margherita Pizza",
@@ -1019,7 +1059,7 @@
     ]
   },
   "indian_pizza": {
-    "srl": 41,
+    "srl": 35,
     "lst": [
       {
         "item": "Massala Pizza",
@@ -1069,7 +1109,7 @@
     ]
   },
   "indian_nan_bab": {
-    "srl": 42,
+    "srl": 36,
     "lst": [
       {
         "item": "Spice Fossway Special Nanbab",
@@ -1119,7 +1159,7 @@
     ]
   },
   "wraps": {
-    "srl": 43,
+    "srl": 37,
     "lst": [
       {
         "item": "Donner Kebab Wrap Single",
@@ -1194,7 +1234,7 @@
     ]
   },
   "basket": {
-    "srl": 44,
+    "srl": 38,
     "lst": "No data found for category \"basket\""
   },
   "n": "kitchen",
