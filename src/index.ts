@@ -240,7 +240,7 @@ const run = async () => {
           for (const addressText of getAllClickedArea) {
             await addressText.click();
           }
-          await page.waitForTimeout(20000);
+          await page.waitForTimeout(200);
           console.log("\nLocation clicked successfully");
         } catch (error) {
           console.error("Error filling input:", error);
@@ -431,8 +431,8 @@ const run = async () => {
               ?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
           );
           const isRequired = requiredText.includes("required");
-          let option = getAllOptions(curr);
-          option = option.filter((curr) => curr.name);
+          let options = getAllOptions(curr);
+          options = options.filter((curr) => curr.name);
           if (optionName) {
             i.name = optionName;
           }
@@ -442,8 +442,8 @@ const run = async () => {
           if (isRequired) {
             i.required = isRequired;
           }
-          if (option.length > 0) {
-            i.option = option;
+          if (options.length > 0) {
+            i.options = options;
           }
           return i;
         });
@@ -459,15 +459,17 @@ const run = async () => {
           if (info) {
             result.info = info;
           }
-          // if (optionElementFromDiv) {
-          //   result.option = optionElementFromDiv;
-          // }
+          if (optionElementFromDiv) {
+            result.option = optionElementFromDiv;
+          }
           return result;
         });
         // ! End scrapping item data --------------------------------------------------------
         return filteredData;
         // return [...new Set(filteredData.map((curr) => curr.item))];
       });
+      console.log(" scrappingItemData : ", JSON.stringify({ title: t, scrappingData: scrappingItemData }));
+      await page.waitForTimeout(30000);
       allElementsData.push({ title: t, scrappingData: scrappingItemData });
       if (
         ["Munchie Box Two", "Any Curry Sauce & Chips", "Any Chicken Curry with Rice & Chips"].find(

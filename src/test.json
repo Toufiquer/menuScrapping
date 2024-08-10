@@ -1,0 +1,18 @@
+{
+  "title": "Set Meal for Two Person",
+  "scrappingData": [
+    {
+      "item": "Set Meal for Two Person",
+      "price": "28.95",
+      "info": "Any 2 Starters, Any 2 Curries, Any 1 Rice, Any 1 nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad",
+      "option": [
+        { "name": "Choose One:", "options": [{ "name": "Choose One:" }] },
+        { "name": "Choose Two (max. 2):", "options": [{ "name": "Choose Two (max. 2):" }] },
+        { "name": "Choose Two (max. 2):", "options": [{ "name": "Choose Two (max. 2):" }] },
+        { "name": "Choose One:", "options": [{ "name": "Choose One:" }] },
+        { "name": "Choose Two (max. 2):", "options": [{ "name": "Choose Two (max. 2):" }] },
+        { "name": "Extra:", "options": [{ "name": "Extra:" }] }
+      ]
+    }
+  ]
+}
