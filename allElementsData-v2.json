@@ -2,7 +2,12 @@
   {
     "title": "Set Meal for One Person",
     "scrappingData": [
-      { "item": "Set Meal for One Person", "price": "15.95", "info": "Onion Bhaji, Chicken Madras, Pilau Rice & Nan" }
+      {
+        "item": "Set Meal for One Person",
+        "price": "15.95",
+        "info": "Onion Bhaji, Chicken Madras, Pilau Rice & Nan",
+        "option": [{ "name": "Add King Prawn?:", "options": [{ "name": "King Prawn", "price": "3.00" }] }]
+      }
     ]
   },
   {
@@ -11,7 +16,41 @@
       {
         "item": "Set Meal for Two Person",
         "price": "28.95",
-        "info": "Any 2 Starters, Any 2 Curries, Any 1 Rice, Any 1 nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad"
+        "info": "Any 2 Starters, Any 2 Curries, Any 1 Rice, Any 1 nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad",
+        "option": [
+          { "name": "Choose One:", "required": true, "options": [{ "name": "Chips" }, { "name": "Bombay Aloo" }] },
+          { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Chicken Chaat Starter" }] },
+          {
+            "name": "Choose Two (max. 2):",
+            "required": true,
+            "options": [{ "name": "Mild Korma Traditional Curry Dish" }]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Plain Pilau Rice" },
+              { "name": "Plain Boiled Rice" },
+              { "name": "Garlic Pilau" },
+              { "name": "Vegetable Pilau" },
+              { "name": "Egg Pilau" },
+              { "name": "Onion Pilau" },
+              { "name": "Keema Pilau" },
+              { "name": "Peas Pilau" },
+              { "name": "Mushroom Pilau" },
+              { "name": "Nut Pilau" },
+              { "name": "Chana Pilau" },
+              { "name": "Coconut Pilau" },
+              { "name": "Green Chilli Pilau" },
+              { "name": "Chicken Tikka Pilau" },
+              { "name": "Chicken Pilau" },
+              { "name": "Mixed Pilau" },
+              { "name": "Peshwari Pilau (Sweet)" }
+            ]
+          },
+          { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Plain Naan" }] },
+          { "name": "Extra:", "options": [{ "name": "Extra for Mixed Kebab" }] }
+        ]
       }
     ]
   },
@@ -27,19 +66,115 @@
       {
         "item": "Munchie Box One",
         "price": "19.95",
-        "info": "Chicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)"
+        "info": "Chicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Tango" }, { "name": "Can of Pepsi" }]
+          }
+        ]
       }
     ]
   },
   { "title": "Munchie Box Two", "scrappingData": [{ "item": "Munchie Box Two", "price": "23.95", "info": "1" }] },
   {
     "title": "Any Curry Sauce & Chips",
-    "scrappingData": [{ "item": "Any Curry Sauce & Chips", "price": "5.50", "info": "£5.50" }]
+    "scrappingData": [
+      {
+        "item": "Any Curry Sauce & Chips",
+        "price": "5.50",
+        "info": "£5.50",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Any Chicken Curry with Rice & Chips",
     "scrappingData": [
-      { "item": "Any Chicken Curry with Rice & Chips", "price": "6.50", "info": "All in One Container" }
+      {
+        "item": "Any Chicken Curry with Rice & Chips",
+        "price": "6.50",
+        "info": "All in One Container",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          }
+        ]
+      }
     ]
   },
   {
@@ -62,7 +197,14 @@
   },
   {
     "title": "Samosas (Mean or Vegetable)",
-    "scrappingData": [{ "item": "Samosas (Mean or Vegetable)", "price": "3.50", "info": "£3.50" }]
+    "scrappingData": [
+      {
+        "item": "Samosas (Mean or Vegetable)",
+        "price": "3.50",
+        "info": "£3.50",
+        "option": [{ "name": "Samosas (Mean or Vegetable):", "required": true, "options": [{ "name": "Mean" }] }]
+      }
+    ]
   },
   {
     "title": "Prawn Cocktail Starter",
@@ -176,7 +318,14 @@
   },
   {
     "title": "Chicken Tandoori Grilled Dish",
-    "scrappingData": [{ "item": "Chicken Tandoori Grilled Dish", "price": "6.80", "info": "from £6.80" }]
+    "scrappingData": [
+      {
+        "item": "Chicken Tandoori Grilled Dish",
+        "price": "6.80",
+        "info": "from £6.80",
+        "option": [{ "name": "Chicken Tandoori Grilled Dish:", "required": true, "options": [{ "name": "Half" }] }]
+      }
+    ]
   },
   {
     "title": "Tandoori Kebab Bihar Tandoori Grilled Dish",
@@ -227,7 +376,14 @@
   { "title": "Chicken Biryani", "scrappingData": [{ "item": "Chicken Biryani", "price": "7.50", "info": "£7.50" }] },
   {
     "title": "Lamb or Prawn Biryani",
-    "scrappingData": [{ "item": "Lamb or Prawn Biryani", "price": "8.50", "info": "£8.50" }]
+    "scrappingData": [
+      {
+        "item": "Lamb or Prawn Biryani",
+        "price": "8.50",
+        "info": "£8.50",
+        "option": [{ "name": "Lamb or Prawn Biryani:", "required": true, "options": [{ "name": "Prawn" }] }]
+      }
+    ]
   },
   {
     "title": "King Prawn Biryani",
@@ -248,18 +404,35 @@
   {
     "title": "Masala",
     "scrappingData": [
-      { "item": "Masala", "price": "5.50", "info": "A rich mild dish cooked with coconut and mixture almond powder" }
+      {
+        "item": "Masala",
+        "price": "5.50",
+        "info": "A rich mild dish cooked with coconut and mixture almond powder",
+        "option": [{ "name": "Masala:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Korma",
     "scrappingData": [
-      { "item": "Korma", "price": "0.00", "info": "A rich and creamy dish with coconut and mixed almonds, very mild" }
+      {
+        "item": "Korma",
+        "price": "0.00",
+        "info": "A rich and creamy dish with coconut and mixed almonds, very mild",
+        "option": [{ "name": "Korma:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Kashmiri",
-    "scrappingData": [{ "item": "Kashmiri", "price": "5.50", "info": "A mild dish cooked with banana and cashew nuts" }]
+    "scrappingData": [
+      {
+        "item": "Kashmiri",
+        "price": "5.50",
+        "info": "A mild dish cooked with banana and cashew nuts",
+        "option": [{ "name": "Kashmiri:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Malayan",
@@ -267,19 +440,32 @@
       {
         "item": "Malayan",
         "price": "0.00",
-        "info": "A very mild curry mainly cooked with pineapple, banana and fresh cream"
+        "info": "A very mild curry mainly cooked with pineapple, banana and fresh cream",
+        "option": [{ "name": "Malayan:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
   {
     "title": "Pasanda",
     "scrappingData": [
-      { "item": "Pasanda", "price": "5.50", "info": "A dish cured in yoghurt and highly flavoured with nuts" }
+      {
+        "item": "Pasanda",
+        "price": "5.50",
+        "info": "A dish cured in yoghurt and highly flavoured with nuts",
+        "option": [{ "name": "Pasanda:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Bhuna",
-    "scrappingData": [{ "item": "Bhuna", "price": "5.50", "info": "Medium with onions, fresh coriander and tomatoes" }]
+    "scrappingData": [
+      {
+        "item": "Bhuna",
+        "price": "5.50",
+        "info": "Medium with onions, fresh coriander and tomatoes",
+        "option": [{ "name": "Bhuna:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Rogan",
@@ -287,7 +473,8 @@
       {
         "item": "Rogan",
         "price": "5.50",
-        "info": "Medium, rogan dishes are very gently spiced curries cooked with fresh tomatoes and fried garlic"
+        "info": "Medium, rogan dishes are very gently spiced curries cooked with fresh tomatoes and fried garlic",
+        "option": [{ "name": "Rogan:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -297,7 +484,8 @@
       {
         "item": "Dupiaza",
         "price": "5.50",
-        "info": "Medium, preparation of dopiaza is similar to bhuna, where onions are mixed with spices and fried briskly"
+        "info": "Medium, preparation of dopiaza is similar to bhuna, where onions are mixed with spices and fried briskly",
+        "option": [{ "name": "Dupiaza:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -307,53 +495,109 @@
       {
         "item": "Curry",
         "price": "5.50",
-        "info": "These curries are not hot but cooked with other generous spices giving a rich flavour"
+        "info": "These curries are not hot but cooked with other generous spices giving a rich flavour",
+        "option": [{ "name": "Curry:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
   {
     "title": "Saag",
     "scrappingData": [
-      { "item": "Saag", "price": "5.50", "info": "A special spinach dish, with fresh coriander and green chilli" }
+      {
+        "item": "Saag",
+        "price": "5.50",
+        "info": "A special spinach dish, with fresh coriander and green chilli",
+        "option": [{ "name": "Saag:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Singapore",
-    "scrappingData": [{ "item": "Singapore", "price": "5.50", "info": "A very hot curry cooked with okras" }]
+    "scrappingData": [
+      {
+        "item": "Singapore",
+        "price": "5.50",
+        "info": "A very hot curry cooked with okras",
+        "option": [{ "name": "Singapore:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Jalfrezi",
     "scrappingData": [
-      { "item": "Jalfrezi", "price": "5.50", "info": "A fairly hot curry cooked with onions, peppers and tomatoes" }
+      {
+        "item": "Jalfrezi",
+        "price": "5.50",
+        "info": "A fairly hot curry cooked with onions, peppers and tomatoes",
+        "option": [{ "name": "Jalfrezi:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Dansak",
     "scrappingData": [
-      { "item": "Dansak", "price": "5.50", "info": "A Parsee dish. Hot, sweet and sour cooked with lentils" }
+      {
+        "item": "Dansak",
+        "price": "5.50",
+        "info": "A Parsee dish. Hot, sweet and sour cooked with lentils",
+        "option": [{ "name": "Dansak:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Balti",
     "scrappingData": [
-      { "item": "Balti", "price": "5.50", "info": "Bhuna style, fresh coriander and green chillies, fairly hot." }
+      {
+        "item": "Balti",
+        "price": "5.50",
+        "info": "Bhuna style, fresh coriander and green chillies, fairly hot.",
+        "option": [{ "name": "Balti:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Ceylon",
-    "scrappingData": [{ "item": "Ceylon", "price": "0.00", "info": "Fairly hot curry with coconut powder" }]
+    "scrappingData": [
+      {
+        "item": "Ceylon",
+        "price": "0.00",
+        "info": "Fairly hot curry with coconut powder",
+        "option": [{ "name": "Ceylon:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Patia",
-    "scrappingData": [{ "item": "Patia", "price": "5.50", "info": "Sweet and Sour, strong spices and herbs" }]
+    "scrappingData": [
+      {
+        "item": "Patia",
+        "price": "5.50",
+        "info": "Sweet and Sour, strong spices and herbs",
+        "option": [{ "name": "Patia:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Vindaloo",
-    "scrappingData": [{ "item": "Vindaloo", "price": "5.50", "info": "Strong hot spiced curry" }]
+    "scrappingData": [
+      {
+        "item": "Vindaloo",
+        "price": "5.50",
+        "info": "Strong hot spiced curry",
+        "option": [{ "name": "Vindaloo:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Phall",
-    "scrappingData": [{ "item": "Phall", "price": "5.50", "info": "Extremely hot curry cooked with red chilli powder" }]
+    "scrappingData": [
+      {
+        "item": "Phall",
+        "price": "5.50",
+        "info": "Extremely hot curry cooked with red chilli powder",
+        "option": [{ "name": "Phall:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Madras",
@@ -361,33 +605,65 @@
       {
         "item": "Madras",
         "price": "5.50",
-        "info": "Fairly hot, a very popular curry in southern India having a greater proportion of hot spices"
+        "info": "Fairly hot, a very popular curry in southern India having a greater proportion of hot spices",
+        "option": [{ "name": "Madras:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
   {
     "title": "Naga",
-    "scrappingData": [{ "item": "Naga", "price": "5.50", "info": "A very hot curry cooked with Naga paste" }]
+    "scrappingData": [
+      {
+        "item": "Naga",
+        "price": "5.50",
+        "info": "A very hot curry cooked with Naga paste",
+        "option": [{ "name": "Naga:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Makani",
-    "scrappingData": [{ "item": "Makani", "price": "5.95", "info": "A mild creamy dish with almond flakes" }]
+    "scrappingData": [
+      {
+        "item": "Makani",
+        "price": "5.95",
+        "info": "A mild creamy dish with almond flakes",
+        "option": [{ "name": "Makani:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Butter",
     "scrappingData": [
-      { "item": "Butter", "price": "5.95", "info": "Mild dish cooked with ground almonds, peanuts and butter" }
+      {
+        "item": "Butter",
+        "price": "5.95",
+        "info": "Mild dish cooked with ground almonds, peanuts and butter",
+        "option": [{ "name": "Butter:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Creamy Patia",
     "scrappingData": [
-      { "item": "Creamy Patia", "price": "5.95", "info": "Testy sweet and sour dish in a creamy sauce" }
+      {
+        "item": "Creamy Patia",
+        "price": "5.95",
+        "info": "Testy sweet and sour dish in a creamy sauce",
+        "option": [{ "name": "Creamy Patia:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Bonoful",
-    "scrappingData": [{ "item": "Bonoful", "price": "5.95", "info": "Cooked in mild, fruity creamy sauce" }]
+    "scrappingData": [
+      {
+        "item": "Bonoful",
+        "price": "5.95",
+        "info": "Cooked in mild, fruity creamy sauce",
+        "option": [{ "name": "Bonoful:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
+    ]
   },
   {
     "title": "Shatkora",
@@ -395,7 +671,8 @@
       {
         "item": "Shatkora",
         "price": "5.95",
-        "info": "Home style hot curry with Shatkora and green chillies in a thick sauce"
+        "info": "Home style hot curry with Shatkora and green chillies in a thick sauce",
+        "option": [{ "name": "Shatkora:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -405,20 +682,31 @@
       {
         "item": "Darjeeling",
         "price": "5.95",
-        "info": "Cooked in a medium hot special Bangladeshi sauce and topped with crispy fried potatoes"
+        "info": "Cooked in a medium hot special Bangladeshi sauce and topped with crispy fried potatoes",
+        "option": [{ "name": "Darjeeling:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
   {
     "title": "Shahjan",
     "scrappingData": [
-      { "item": "Shahjan", "price": "5.95", "info": "A hot dish cooked with fried onions, peppers and mushrooms" }
+      {
+        "item": "Shahjan",
+        "price": "5.95",
+        "info": "A hot dish cooked with fried onions, peppers and mushrooms",
+        "option": [{ "name": "Shahjan:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
     "title": "Karai",
     "scrappingData": [
-      { "item": "Karai", "price": "5.95", "info": "Cooked with tandoori paste, fried peppers and onions" }
+      {
+        "item": "Karai",
+        "price": "5.95",
+        "info": "Cooked with tandoori paste, fried peppers and onions",
+        "option": [{ "name": "Karai:", "required": true, "options": [{ "name": "Chicken" }] }]
+      }
     ]
   },
   {
@@ -427,7 +715,8 @@
       {
         "item": "Kashari",
         "price": "5.95",
-        "info": "Cooked bhuna style with lentils, fresh coriander and green chillies"
+        "info": "Cooked bhuna style with lentils, fresh coriander and green chillies",
+        "option": [{ "name": "Kashari:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -437,7 +726,8 @@
       {
         "item": "Bengal",
         "price": "5.95",
-        "info": "Bhuna style, Fairly hot, cooked with roast potatoes, boiled egg and tomatoes"
+        "info": "Bhuna style, Fairly hot, cooked with roast potatoes, boiled egg and tomatoes",
+        "option": [{ "name": "Bengal:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -447,7 +737,8 @@
       {
         "item": "Boishaki",
         "price": "5.95",
-        "info": "Cooked with fresh garlic, onion and coriander and various herbs and spices"
+        "info": "Cooked with fresh garlic, onion and coriander and various herbs and spices",
+        "option": [{ "name": "Boishaki:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -457,7 +748,8 @@
       {
         "item": "Balti Chatpathi",
         "price": "5.95",
-        "info": "Cooked in a special balti sauce with onions, red papper, garlic and coriander and topped with fried potatoes and green chillies"
+        "info": "Cooked in a special balti sauce with onions, red papper, garlic and coriander and topped with fried potatoes and green chillies",
+        "option": [{ "name": "Balti Chatpathi:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
@@ -467,15 +759,61 @@
       {
         "item": "Chilli Garlic",
         "price": "5.95",
-        "info": "A fairly hot dish cooked with sliced garlic, onions, fresh coriander and green chilli"
+        "info": "A fairly hot dish cooked with sliced garlic, onions, fresh coriander and green chilli",
+        "option": [{ "name": "Chilli Garlic:", "required": true, "options": [{ "name": "Chicken" }] }]
       }
     ]
   },
-  { "title": "Cheesy Parmesan", "scrappingData": [{ "item": "Cheesy Parmesan", "price": "6.95", "info": "£6.95" }] },
-  { "title": "BBQ Parmesan", "scrappingData": [{ "item": "BBQ Parmesan", "price": "7.95", "info": "£7.95" }] },
+  {
+    "title": "Cheesy Parmesan",
+    "scrappingData": [
+      {
+        "item": "Cheesy Parmesan",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "BBQ Parmesan",
+    "scrappingData": [
+      {
+        "item": "BBQ Parmesan",
+        "price": "7.95",
+        "info": "£7.95",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
+  },
   {
     "title": "Bolognese Parmesan",
-    "scrappingData": [{ "item": "Bolognese Parmesan", "price": "7.95", "info": "£7.95" }]
+    "scrappingData": [
+      {
+        "item": "Bolognese Parmesan",
+        "price": "7.95",
+        "info": "£7.95",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Cheesy Burger Single",
@@ -483,7 +821,20 @@
   },
   {
     "title": "Cheesy Burger Meal",
-    "scrappingData": [{ "item": "Cheesy Burger Meal", "price": "5.95", "info": "£5.95" }]
+    "scrappingData": [
+      {
+        "item": "Cheesy Burger Meal",
+        "price": "5.95",
+        "info": "£5.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Double Cheese Burger Single",
@@ -491,7 +842,20 @@
   },
   {
     "title": "Double Cheese Burger Meal",
-    "scrappingData": [{ "item": "Double Cheese Burger Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Double Cheese Burger Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Chicken Burger Single",
@@ -499,7 +863,20 @@
   },
   {
     "title": "Chicken Burger Meal",
-    "scrappingData": [{ "item": "Chicken Burger Meal", "price": "5.95", "info": "£5.95" }]
+    "scrappingData": [
+      {
+        "item": "Chicken Burger Meal",
+        "price": "5.95",
+        "info": "£5.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Spicy Beef Burger Single",
@@ -510,7 +887,18 @@
   {
     "title": "Spicy Beef Burger Meal",
     "scrappingData": [
-      { "item": "Spicy Beef Burger Meal", "price": "5.95", "info": "Comes with chili sauce and jalapeños" }
+      {
+        "item": "Spicy Beef Burger Meal",
+        "price": "5.95",
+        "info": "Comes with chili sauce and jalapeños",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
     ]
   },
   { "title": "Plain Naan", "scrappingData": [{ "item": "Plain Naan", "price": "2.50", "info": "£2.50" }] },
@@ -590,7 +978,43 @@
   },
   { "title": "Saag Paneer", "scrappingData": [{ "item": "Saag Paneer", "price": "3.50", "info": "£3.50" }] },
   { "title": "Chana Saag", "scrappingData": [{ "item": "Chana Saag", "price": "3.50", "info": "£3.50" }] },
-  { "title": "Any Curry Sauce", "scrappingData": [{ "item": "Any Curry Sauce", "price": "3.50", "info": "£3.50" }] },
+  {
+    "title": "Any Curry Sauce",
+    "scrappingData": [
+      {
+        "item": "Any Curry Sauce",
+        "price": "3.50",
+        "info": "£3.50",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Mild Korma Traditional Curry Dish" },
+              { "name": "Mild Malayan Traditional Curry Dish" },
+              { "name": "Mild Pasanda Traditional Curry Dish" },
+              { "name": "Mild Makana Traditional Curry Dish" },
+              { "name": "Mild Kashmiri Traditional Curry Dish" },
+              { "name": "Hot Madras Traditional Curry Dish" },
+              { "name": "Hot Dansak Traditional Curry Dish" },
+              { "name": "Hot Pathia Traditional Curry Dish" },
+              { "name": "Hot Shahjan Traditional Curry Dish" },
+              { "name": "Hot Sri Lanka Traditional Curry Dish" },
+              { "name": "Medium Curry Traditional Curry Dish" },
+              { "name": "Medium Mushroom Traditional Curry Dish" },
+              { "name": "Medium Bhuna Traditional Curry Dish" },
+              { "name": "Medium Rogan Traditional Curry Dish" },
+              { "name": "Medium Dupiaza Traditional Curry Dish" },
+              { "name": "Very Hot Vindaloo Traditional Curry Dish" },
+              { "name": "Very Hot Phall Traditional Curry Dish" },
+              { "name": "Very Hot Naga Traditional Curry Dish" },
+              { "name": "Very Hot Singapore Traditional Curry Dish" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   { "title": "Chips", "scrappingData": [{ "item": "Chips", "price": "2.50", "info": "£2.50" }] },
   { "title": "Indian Chips", "scrappingData": [{ "item": "Indian Chips", "price": "2.70", "info": "£2.70" }] },
   { "title": "Cheesy Chips", "scrappingData": [{ "item": "Cheesy Chips", "price": "3.50", "info": "£3.50" }] },
@@ -614,7 +1038,16 @@
   { "title": "Pickle Tray", "scrappingData": [{ "item": "Pickle Tray", "price": "3.50", "info": "£3.50" }] },
   {
     "title": "Raita",
-    "scrappingData": [{ "item": "Raita", "price": "1.95", "info": "Indian style natural yoghurt, cucumber or onion" }]
+    "scrappingData": [
+      {
+        "item": "Raita",
+        "price": "1.95",
+        "info": "Indian style natural yoghurt, cucumber or onion",
+        "option": [
+          { "name": "Choose One:", "required": true, "options": [{ "name": "Cucumber" }, { "name": "Onion" }] }
+        ]
+      }
+    ]
   },
   { "title": "Prawn Omelette", "scrappingData": [{ "item": "Prawn Omelette", "price": "5.95", "info": "£5.95" }] },
   {
@@ -670,80 +1103,189 @@
   { "title": "Chocolate Cake", "scrappingData": [{ "item": "Chocolate Cake", "price": "2.95", "info": "£2.95" }] },
   {
     "title": "Margherita Pizza",
-    "scrappingData": [{ "item": "Margherita Pizza", "price": "4.95", "info": "Pizza Sauce and Cheese" }]
+    "scrappingData": [
+      {
+        "item": "Margherita Pizza",
+        "price": "4.95",
+        "info": "Pizza Sauce and Cheese",
+        "option": [{ "name": "Margherita Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Vegetable Pizza",
-    "scrappingData": [{ "item": "Vegetable Pizza", "price": "4.95", "info": "Vegetable on Pizza" }]
+    "scrappingData": [
+      {
+        "item": "Vegetable Pizza",
+        "price": "4.95",
+        "info": "Vegetable on Pizza",
+        "option": [{ "name": "Vegetable Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Cheese Garlic Bread",
-    "scrappingData": [{ "item": "Cheese Garlic Bread", "price": "4.95", "info": "Garlic Bread with Cheese on it" }]
+    "scrappingData": [
+      {
+        "item": "Cheese Garlic Bread",
+        "price": "4.95",
+        "info": "Garlic Bread with Cheese on it",
+        "option": [{ "name": "Cheese Garlic Bread:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Garlic Bread",
-    "scrappingData": [{ "item": "Garlic Bread", "price": "4.95", "info": "Garlic Base Comes with Garlic Paste" }]
+    "scrappingData": [
+      {
+        "item": "Garlic Bread",
+        "price": "4.95",
+        "info": "Garlic Base Comes with Garlic Paste",
+        "option": [{ "name": "Garlic Bread:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Kebab Pizza",
     "scrappingData": [
-      { "item": "Kebab Pizza", "price": "6.95", "info": "Pizza sauce, garlic paste, kebab, onions and cheese" }
+      {
+        "item": "Kebab Pizza",
+        "price": "6.95",
+        "info": "Pizza sauce, garlic paste, kebab, onions and cheese",
+        "option": [{ "name": "Kebab Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
     ]
   },
   {
     "title": "Pepperoni Pizza",
-    "scrappingData": [{ "item": "Pepperoni Pizza", "price": "6.95", "info": "Pizza sauce, pepperoni and cheese" }]
+    "scrappingData": [
+      {
+        "item": "Pepperoni Pizza",
+        "price": "6.95",
+        "info": "Pizza sauce, pepperoni and cheese",
+        "option": [{ "name": "Pepperoni Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Double Pepperoni Pizza",
     "scrappingData": [
-      { "item": "Double Pepperoni Pizza", "price": "7.95", "info": "Pizza sauce, double pepperoni and cheese" }
+      {
+        "item": "Double Pepperoni Pizza",
+        "price": "7.95",
+        "info": "Pizza sauce, double pepperoni and cheese",
+        "option": [{ "name": "Double Pepperoni Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
     ]
   },
   {
     "title": "London Pizza",
-    "scrappingData": [{ "item": "London Pizza", "price": "6.95", "info": "Pizza sauce, chips and cheese" }]
+    "scrappingData": [
+      {
+        "item": "London Pizza",
+        "price": "6.95",
+        "info": "Pizza sauce, chips and cheese",
+        "option": [{ "name": "London Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Massala Pizza",
-    "scrappingData": [{ "item": "Massala Pizza", "price": "6.95", "info": "Chicken tikka, cheese and massala sauce" }]
+    "scrappingData": [
+      {
+        "item": "Massala Pizza",
+        "price": "6.95",
+        "info": "Chicken tikka, cheese and massala sauce",
+        "option": [{ "name": "Massala Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Madras Pizza",
-    "scrappingData": [{ "item": "Madras Pizza", "price": "6.95", "info": "Chicken, cheese and madras sauce" }]
+    "scrappingData": [
+      {
+        "item": "Madras Pizza",
+        "price": "6.95",
+        "info": "Chicken, cheese and madras sauce",
+        "option": [{ "name": "Madras Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Korma Pizza",
-    "scrappingData": [{ "item": "Korma Pizza", "price": "6.95", "info": "Chicken, cheese and korma sauce" }]
+    "scrappingData": [
+      {
+        "item": "Korma Pizza",
+        "price": "6.95",
+        "info": "Chicken, cheese and korma sauce",
+        "option": [{ "name": "Korma Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Jalfrezi Pizza",
-    "scrappingData": [{ "item": "Jalfrezi Pizza", "price": "6.95", "info": "Chicken, cheese and jalfrezi sauce" }]
+    "scrappingData": [
+      {
+        "item": "Jalfrezi Pizza",
+        "price": "6.95",
+        "info": "Chicken, cheese and jalfrezi sauce",
+        "option": [{ "name": "Jalfrezi Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Naga Pizza",
-    "scrappingData": [{ "item": "Naga Pizza", "price": "6.95", "info": "Chicken, cheese and naga sauce" }]
+    "scrappingData": [
+      {
+        "item": "Naga Pizza",
+        "price": "6.95",
+        "info": "Chicken, cheese and naga sauce",
+        "option": [{ "name": "Naga Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Tikka Pizza",
-    "scrappingData": [{ "item": "Tikka Pizza", "price": "6.95", "info": "Chicken tikka, cheese, onion and peppers" }]
+    "scrappingData": [
+      {
+        "item": "Tikka Pizza",
+        "price": "6.95",
+        "info": "Chicken tikka, cheese, onion and peppers",
+        "option": [{ "name": "Tikka Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
+    ]
   },
   {
     "title": "Mixed Grill Pizza",
     "scrappingData": [
-      { "item": "Mixed Grill Pizza", "price": "6.95", "info": "Cheese, tomato, lamb tikka, chicken tikka" }
+      {
+        "item": "Mixed Grill Pizza",
+        "price": "6.95",
+        "info": "Cheese, tomato, lamb tikka, chicken tikka",
+        "option": [{ "name": "Mixed Grill Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
     ]
   },
   {
     "title": "Chicken Chat Pizza",
     "scrappingData": [
-      { "item": "Chicken Chat Pizza", "price": "6.95", "info": "Cheese, tomato, lamb tikka and chicken chat" }
+      {
+        "item": "Chicken Chat Pizza",
+        "price": "6.95",
+        "info": "Cheese, tomato, lamb tikka and chicken chat",
+        "option": [{ "name": "Chicken Chat Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
     ]
   },
   {
     "title": "Tikka Chat Pizza",
     "scrappingData": [
-      { "item": "Tikka Chat Pizza", "price": "6.95", "info": "Cheese, tomato, lamb tikka and tikka chat" }
+      {
+        "item": "Tikka Chat Pizza",
+        "price": "6.95",
+        "info": "Cheese, tomato, lamb tikka and tikka chat",
+        "option": [{ "name": "Tikka Chat Pizza:", "required": true, "options": [{ "name": "10\"" }] }]
+      }
     ]
   },
   {
@@ -752,46 +1294,177 @@
       {
         "item": "Spice Fossway Special Nanbab",
         "price": "14.95",
-        "info": "Chicken tikka, donner kebab fried with onions and spice."
+        "info": "Chicken tikka, donner kebab fried with onions and spice.",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
       }
     ]
   },
   {
     "title": "Chicken Tikka Nanbab",
-    "scrappingData": [{ "item": "Chicken Tikka Nanbab", "price": "14.95", "info": "£14.95" }]
+    "scrappingData": [
+      {
+        "item": "Chicken Tikka Nanbab",
+        "price": "14.95",
+        "info": "£14.95",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
-  { "title": "Donner Nanbab", "scrappingData": [{ "item": "Donner Nanbab", "price": "14.95", "info": "£14.95" }] },
+  {
+    "title": "Donner Nanbab",
+    "scrappingData": [
+      {
+        "item": "Donner Nanbab",
+        "price": "14.95",
+        "info": "£14.95",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
+  },
   {
     "title": "Masala Nanbab",
     "scrappingData": [
-      { "item": "Masala Nanbab", "price": "14.95", "info": "Chicken tikka cooked in a thick masala sauce" }
+      {
+        "item": "Masala Nanbab",
+        "price": "14.95",
+        "info": "Chicken tikka cooked in a thick masala sauce",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
     ]
   },
   {
     "title": "Balti Nanbab",
     "scrappingData": [
-      { "item": "Balti Nanbab", "price": "14.95", "info": "Chicken tikka cooked in a thick balti sauce" }
+      {
+        "item": "Balti Nanbab",
+        "price": "14.95",
+        "info": "Chicken tikka cooked in a thick balti sauce",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
     ]
   },
   {
     "title": "Madras Nanbab",
     "scrappingData": [
-      { "item": "Madras Nanbab", "price": "14.95", "info": "Chicken tikka cooked in a thick madras sauce" }
+      {
+        "item": "Madras Nanbab",
+        "price": "14.95",
+        "info": "Chicken tikka cooked in a thick madras sauce",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
     ]
   },
   {
     "title": "Korma Nanbab",
     "scrappingData": [
-      { "item": "Korma Nanbab", "price": "14.95", "info": "Chicken tikka cooked in a thick korma sauce" }
+      {
+        "item": "Korma Nanbab",
+        "price": "14.95",
+        "info": "Chicken tikka cooked in a thick korma sauce",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
     ]
   },
   {
     "title": "Mixed Nanbab",
-    "scrappingData": [{ "item": "Mixed Nanbab", "price": "14.95", "info": "Chicken tikka and donner kebab" }]
+    "scrappingData": [
+      {
+        "item": "Mixed Nanbab",
+        "price": "14.95",
+        "info": "Chicken tikka and donner kebab",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Any Curry Sauce Nanbab",
-    "scrappingData": [{ "item": "Any Curry Sauce Nanbab", "price": "11.95", "info": "Any curry sauce with nanbab" }]
+    "scrappingData": [
+      {
+        "item": "Any Curry Sauce Nanbab",
+        "price": "11.95",
+        "info": "Any curry sauce with nanbab",
+        "option": [
+          {
+            "name": "Choose Your Drink:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi 330ml" }, { "name": "Can of Tango 330ml" }]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Mild Korma Traditional Curry Dish" },
+              { "name": "Mild Malayan Traditional Curry Dish" },
+              { "name": "Mild Pasanda Traditional Curry Dish" },
+              { "name": "Mild Makana Traditional Curry Dish" },
+              { "name": "Mild Kashmiri Traditional Curry Dish" },
+              { "name": "Hot Madras Traditional Curry Dish" },
+              { "name": "Hot Dansak Traditional Curry Dish" },
+              { "name": "Hot Pathia Traditional Curry Dish" },
+              { "name": "Hot Shahjan Traditional Curry Dish" },
+              { "name": "Hot Sri Lanka Traditional Curry Dish" },
+              { "name": "Medium Curry Traditional Curry Dish" },
+              { "name": "Medium Mushroom Traditional Curry Dish" },
+              { "name": "Medium Bhuna Traditional Curry Dish" },
+              { "name": "Medium Rogan Traditional Curry Dish" },
+              { "name": "Medium Dupiaza Traditional Curry Dish" },
+              { "name": "Very Hot Vindaloo Traditional Curry Dish" },
+              { "name": "Very Hot Phall Traditional Curry Dish" },
+              { "name": "Very Hot Naga Traditional Curry Dish" },
+              { "name": "Very Hot Singapore Traditional Curry Dish" }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Donner Kebab Wrap Single",
@@ -799,7 +1472,20 @@
   },
   {
     "title": "Donner Kebab Wrap Meal",
-    "scrappingData": [{ "item": "Donner Kebab Wrap Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Donner Kebab Wrap Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Chicken Wrap Single",
@@ -807,7 +1493,20 @@
   },
   {
     "title": "Chicken Wrap Meal",
-    "scrappingData": [{ "item": "Chicken Wrap Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Chicken Wrap Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Seekh Kebab Wrap Single",
@@ -815,7 +1514,20 @@
   },
   {
     "title": "Seekh Kebab Wrap Meal",
-    "scrappingData": [{ "item": "Seekh Kebab Wrap Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Seekh Kebab Wrap Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Cheesy Chips Wrap Single",
@@ -823,7 +1535,20 @@
   },
   {
     "title": "Cheesy Chips Wrap Meal",
-    "scrappingData": [{ "item": "Cheesy Chips Wrap Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Cheesy Chips Wrap Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Veggie Wrap Single (V)",
@@ -831,7 +1556,20 @@
   },
   {
     "title": "Veggie Wrap Meal (V)",
-    "scrappingData": [{ "item": "Veggie Wrap Meal (V)", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Veggie Wrap Meal (V)",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Chicken Tikka Naan Wrap Single",
@@ -849,16 +1587,94 @@
       {
         "item": "Chicken Tikka Nan Wrap Meal",
         "price": "7.95",
-        "info": "Cooked in a tandoori oven with fried onions and green peppers"
+        "info": "Cooked in a tandoori oven with fried onions and green peppers",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          }
+        ]
       }
     ]
   },
   {
     "title": "Any Curry Wraps Single",
-    "scrappingData": [{ "item": "Any Curry Wraps Single", "price": "5.95", "info": "£5.95" }]
+    "scrappingData": [
+      {
+        "item": "Any Curry Wraps Single",
+        "price": "5.95",
+        "info": "£5.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Mild Korma Traditional Curry Dish" },
+              { "name": "Mild Malayan Traditional Curry Dish" },
+              { "name": "Mild Pasanda Traditional Curry Dish" },
+              { "name": "Mild Makana Traditional Curry Dish" },
+              { "name": "Mild Kashmiri Traditional Curry Dish" },
+              { "name": "Hot Madras Traditional Curry Dish" },
+              { "name": "Hot Dansak Traditional Curry Dish" },
+              { "name": "Hot Pathia Traditional Curry Dish" },
+              { "name": "Hot Shahjan Traditional Curry Dish" },
+              { "name": "Hot Sri Lanka Traditional Curry Dish" },
+              { "name": "Medium Curry Traditional Curry Dish" },
+              { "name": "Medium Mushroom Traditional Curry Dish" },
+              { "name": "Medium Bhuna Traditional Curry Dish" },
+              { "name": "Medium Rogan Traditional Curry Dish" },
+              { "name": "Medium Dupiaza Traditional Curry Dish" },
+              { "name": "Very Hot Vindaloo Traditional Curry Dish" },
+              { "name": "Very Hot Phall Traditional Curry Dish" },
+              { "name": "Very Hot Naga Traditional Curry Dish" },
+              { "name": "Very Hot Singapore Traditional Curry Dish" }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "title": "Any Curry Wraps Meal",
-    "scrappingData": [{ "item": "Any Curry Wraps Meal", "price": "6.95", "info": "£6.95" }]
+    "scrappingData": [
+      {
+        "item": "Any Curry Wraps Meal",
+        "price": "6.95",
+        "info": "£6.95",
+        "option": [
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Pepsi" }, { "name": "Can of Tango" }]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Mild Korma Traditional Curry Dish" },
+              { "name": "Mild Malayan Traditional Curry Dish" },
+              { "name": "Mild Pasanda Traditional Curry Dish" },
+              { "name": "Mild Makana Traditional Curry Dish" },
+              { "name": "Mild Kashmiri Traditional Curry Dish" },
+              { "name": "Hot Madras Traditional Curry Dish" },
+              { "name": "Hot Dansak Traditional Curry Dish" },
+              { "name": "Hot Pathia Traditional Curry Dish" },
+              { "name": "Hot Shahjan Traditional Curry Dish" },
+              { "name": "Hot Sri Lanka Traditional Curry Dish" },
+              { "name": "Medium Curry Traditional Curry Dish" },
+              { "name": "Medium Mushroom Traditional Curry Dish" },
+              { "name": "Medium Bhuna Traditional Curry Dish" },
+              { "name": "Medium Rogan Traditional Curry Dish" },
+              { "name": "Medium Dupiaza Traditional Curry Dish" },
+              { "name": "Very Hot Vindaloo Traditional Curry Dish" },
+              { "name": "Very Hot Phall Traditional Curry Dish" },
+              { "name": "Very Hot Naga Traditional Curry Dish" },
+              { "name": "Very Hot Singapore Traditional Curry Dish" }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

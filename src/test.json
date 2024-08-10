@@ -1,13 +1,36 @@
 {
-  "title": "Munchie Box One",
+  "title": "Any Curry Sauce & Chips",
   "scrappingData": [
     {
-      "item": "Munchie Box One",
-      "price": "19.95",
-      "info": "Chicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)",
+      "item": "Any Curry Sauce & Chips",
+      "price": "5.50",
+      "info": "£5.50",
       "option": [
-        { "name": "Choose Curry Sauce:", "required": true, "options": [{ "name": "Korma" }] },
-        { "name": "Choose One:", "required": true, "options": [{ "name": "Can of Tango" }] }
+        {
+          "name": "Choose Curry Sauce:",
+          "required": true,
+          "options": [
+            { "name": "Korma" },
+            { "name": "Malayan" },
+            { "name": "Pasanda" },
+            { "name": "Makani" },
+            { "name": "Kashmiri" },
+            { "name": "Madras" },
+            { "name": "Dansak" },
+            { "name": "Pathia" },
+            { "name": "Shahjan" },
+            { "name": "Sri Lanka" },
+            { "name": "Curry" },
+            { "name": "Mushroom" },
+            { "name": "Bhuna" },
+            { "name": "Rogan" },
+            { "name": "Dupiaza" },
+            { "name": "Vindaloo" },
+            { "name": "Phall" },
+            { "name": "Naga" },
+            { "name": "Singapore" }
+          ]
+        }
       ]
     }
   ]
