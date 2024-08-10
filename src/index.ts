@@ -426,11 +426,11 @@ const run = async () => {
           let i = {};
           const optionName = getInnerText(curr?.children[0]?.children[0]?.children[0]);
           const optionFor = getInnerText(curr?.children[0]?.children[0]?.children[1]);
-          let requiredText = getInnerText(
-            curr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
-              ?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
-          );
-          const isRequired = requiredText.includes("required");
+          let requiredText = curr.innerText;
+          console.log("required curr :", curr);
+          const isRequired = requiredText.toLowerCase().includes("required");
+          console.log("requiredText :", requiredText);
+          console.log("isRequired :", isRequired);
           let options = getAllOptions(curr);
           options = options.filter((curr) => curr.name);
           if (optionName) {
@@ -445,6 +445,8 @@ const run = async () => {
           if (options.length > 0) {
             i.options = options;
           }
+          console.log("return i : ", i);
+          console.log("");
           return i;
         });
         let filteredData = nodeElementFromDiv.map((curr) => {
