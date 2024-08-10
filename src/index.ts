@@ -469,6 +469,32 @@ const run = async () => {
         // return [...new Set(filteredData.map((curr) => curr.item))];
       });
       allElementsData.push({ title: t, scrappingData: scrappingItemData });
+      if (
+        ["Munchie Box Two", "Any Curry Sauce & Chips", "Any Chicken Curry with Rice & Chips"].find(
+          (curr) => curr.toLowerCase() === t.toLowerCase()
+        )
+      ) {
+        // console.log("");
+        // console.log("");
+        // console.log("");
+        // // console.log("wait for 20 seconds");
+        // console.log("");
+        console.log("clicked title", t);
+        // console.log("");
+        // const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
+        // const closeButtonIcon = await page.$$("span[data-qa='icon-button']");
+        // console.log("");
+        // console.log("");
+        // console.log("");
+        // console.log("closeButton title", t);
+        // console.log("closeButton", closeButton);
+        // console.log("closeButtonIcon", closeButtonIcon);
+        // console.log("");
+        // console.log("scrappingItemData : ", JSON.stringify(scrappingItemData));
+        // console.log("");
+        // await page.waitForTimeout(20000);
+      }
+
       // await page.waitForTimeout(2000);
       if (scrappingItemData?.length > 0) {
         scrapingMenuData = scrapingMenuData.map((mainItem) => {
@@ -490,7 +516,7 @@ const run = async () => {
               console.log("");
               i.data.push(...scrappingItemData);
               i.cache.push({ parentTitle: i.title, isAlreadyExist: isAlreadyExist, clickedItem: t });
-              console.log("i ", i);
+              // console.log("i ", i);
             }
           }
           return i;
@@ -500,12 +526,22 @@ const run = async () => {
       // await page.waitForTimeout(5000);
 
       await page.waitForTimeout(10);
-      // ! Close modal
+      // ! Close modal [if the modal has no image]
       const closeButton = await page.$$("span[data-qa='modal-header-action-close']");
-      for (let closeBtn of closeButton) {
-        await closeBtn.click();
-        await page.waitForTimeout(100);
+      const closeButtonIcon = await page.$$("span[data-qa='icon-button']");
+      if (closeButton.length > 0) {
+        for (let closeBtn of closeButton) {
+          await closeBtn.click();
+          await page.waitForTimeout(100);
+        }
       }
+      // ! Close modal [if the modal has image]
+      // else if (closeButtonIcon.length > 0) {
+      //   for (let closeBtn of closeButtonIcon) {
+      //     await closeBtn.click();
+      //     await page.waitForTimeout(100);
+      //   }
+      // }
       await page.waitForTimeout(10);
     }
 
