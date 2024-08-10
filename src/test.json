@@ -1,17 +1,13 @@
 {
-  "title": "Set Meal for Two Person",
+  "title": "Munchie Box One",
   "scrappingData": [
     {
-      "item": "Set Meal for Two Person",
-      "price": "28.95",
-      "info": "Any 2 Starters, Any 2 Curries, Any 1 Rice, Any 1 nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad",
+      "item": "Munchie Box One",
+      "price": "19.95",
+      "info": "Chicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)",
       "option": [
-        { "name": "Choose One:", "required": true, "options": [{ "name": "Choose One:" }] },
-        { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Choose Two (max. 2):" }] },
-        { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Choose Two (max. 2):" }] },
-        { "name": "Choose One:", "required": true, "options": [{ "name": "Choose One:" }] },
-        { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Choose Two (max. 2):" }] },
-        { "name": "Extra:", "options": [{ "name": "Extra:" }] }
+        { "name": "Choose Curry Sauce:", "required": true, "options": [{ "name": "Korma" }] },
+        { "name": "Choose One:", "required": true, "options": [{ "name": "Can of Tango" }] }
       ]
     }
   ]

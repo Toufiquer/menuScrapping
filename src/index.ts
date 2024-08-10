@@ -404,20 +404,27 @@ const run = async () => {
         };
         const nodeElementFromDiv = getNodeElements(div);
         let optionElementFromDiv = getNodeElements(divItemChoices);
-        const getAllOptions = (curr) => {
-          // return options
-          return curr.children[0]?.children[0]?.children.map((options) => {
-            let newOptions = {};
-            const optionsName = getInnerText(options?.children[0]);
-            const optionsPrice = getInnerText(getDataByTagName(options?.children[1], "span"));
-            if (optionsName) {
-              newOptions.name = optionsName;
-            }
-            if (optionsPrice) {
-              newOptions.price = optionsPrice;
-            }
 
-            return newOptions;
+        const getAllOptions = (curr) => {
+          // console.log("inside allOptions", curr);
+          // console.log("options allOptions");
+          // return options
+          return curr?.children[0]?.children[1]?.children[0]?.children[0]?.children?.map((innerCurr) => {
+            // console.log("innerCurr", innerCurr?.innerText);
+            // console.log(
+            //   "price ",
+            //   innerCurr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
+            //     ?.innerText
+            // );
+            const name = getInnerText(innerCurr);
+            const price =
+              innerCurr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]
+                ?.innerText;
+            const result: { name: string; price?: string } = { name };
+            if (price) {
+              result.price = price.split("+")[1].split("£")[1];
+            }
+            return result;
           });
         };
 
@@ -427,10 +434,7 @@ const run = async () => {
           const optionName = getInnerText(curr?.children[0]?.children[0]?.children[0]);
           const optionFor = getInnerText(curr?.children[0]?.children[0]?.children[1]);
           let requiredText = curr.innerText;
-          console.log("required curr :", curr);
           const isRequired = requiredText.toLowerCase().includes("required");
-          console.log("requiredText :", requiredText);
-          console.log("isRequired :", isRequired);
           let options = getAllOptions(curr);
           options = options.filter((curr) => curr.name);
           if (optionName) {
