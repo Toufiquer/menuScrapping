@@ -1,0 +1,195 @@
+[
+  {
+    "title": "Set Meals",
+    "innerSection": [
+      "Set Meal for One Person",
+      "Set Meal for Two Person",
+      "Special Thali",
+      "Munchie Box One",
+      "Munchie Box Two",
+      "Any Curry Sauce & Chips",
+      "Any Chicken Curry with Rice & Chips"
+    ],
+    "data": [
+      {
+        "item": "Set Meal for One Person",
+        "price": "15.95",
+        "info": "Onion Bhaji, Chicken Madras, Pilau Rice & Nan",
+        "option": [{ "name": "Add King Prawn?:", "options": [{ "name": "King Prawn", "price": "3.00" }] }]
+      },
+      {
+        "item": "Set Meal for Two Person",
+        "price": "28.95",
+        "info": "Any 2 Starters, Any 2 Curries, Any 1 Rice, Any 1 nans, 1 Portion of Chips or Bombay Aloo, 2 Popadoms with Mango Chutney & Onion Salad",
+        "option": [
+          { "name": "Choose One:", "required": true, "options": [{ "name": "Chips" }, { "name": "Bombay Aloo" }] },
+          { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Chicken Chaat Starter" }] },
+          {
+            "name": "Choose Two (max. 2):",
+            "required": true,
+            "options": [{ "name": "Mild Korma Traditional Curry Dish" }]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [
+              { "name": "Plain Pilau Rice" },
+              { "name": "Plain Boiled Rice" },
+              { "name": "Garlic Pilau" },
+              { "name": "Vegetable Pilau" },
+              { "name": "Egg Pilau" },
+              { "name": "Onion Pilau" },
+              { "name": "Keema Pilau" },
+              { "name": "Peas Pilau" },
+              { "name": "Mushroom Pilau" },
+              { "name": "Nut Pilau" },
+              { "name": "Chana Pilau" },
+              { "name": "Coconut Pilau" },
+              { "name": "Green Chilli Pilau" },
+              { "name": "Chicken Tikka Pilau" },
+              { "name": "Chicken Pilau" },
+              { "name": "Mixed Pilau" },
+              { "name": "Peshwari Pilau (Sweet)" }
+            ]
+          },
+          { "name": "Choose Two (max. 2):", "required": true, "options": [{ "name": "Plain Naan" }] },
+          { "name": "Extra:", "options": [{ "name": "Extra for Mixed Kebab" }] }
+        ]
+      },
+      { "item": "Special Thali", "price": "16.95", "info": "Chicken Tikka, Onion Bhaji, Lamb Bhuna, Chicken Tikka" },
+      {
+        "item": "Munchie Box One",
+        "price": "19.95",
+        "info": "Chicken Tikka, Sheek Kebab, Onion, Bhaji, Samosa, Donner, Chips, Any Choice of Curry Sauce & 1 Plain Rice with Salad, Dips & Can of Pop (Tango or Pepsi)",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          },
+          {
+            "name": "Choose One:",
+            "required": true,
+            "options": [{ "name": "Can of Tango" }, { "name": "Can of Pepsi" }]
+          }
+        ]
+      },
+      { "item": "Munchie Box Two", "price": "23.95", "info": "1" },
+      {
+        "item": "Any Curry Sauce & Chips",
+        "price": "5.50",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          }
+        ]
+      },
+      {
+        "item": "Any Chicken Curry with Rice & Chips",
+        "price": "6.50",
+        "info": "All in One Container",
+        "option": [
+          {
+            "name": "Choose Curry Sauce:",
+            "required": true,
+            "options": [
+              { "name": "Korma" },
+              { "name": "Malayan" },
+              { "name": "Pasanda" },
+              { "name": "Makani" },
+              { "name": "Kashmiri" },
+              { "name": "Madras" },
+              { "name": "Dansak" },
+              { "name": "Pathia" },
+              { "name": "Shahjan" },
+              { "name": "Sri Lanka" },
+              { "name": "Curry" },
+              { "name": "Mushroom" },
+              { "name": "Bhuna" },
+              { "name": "Rogan" },
+              { "name": "Dupiaza" },
+              { "name": "Vindaloo" },
+              { "name": "Phall" },
+              { "name": "Naga" },
+              { "name": "Singapore" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Starters",
+    "innerSection": [
+      "Chicken Chaat Starter",
+      "Tikka Chaat Starter",
+      "Onion Bhaji",
+      "Vegetable Pakora Starter",
+      "Samosas (Mean or Vegetable)",
+      "Prawn Cocktail Starter",
+      "Bhuna Prawn on Puri",
+      "Bhuna Chicken on Puri",
+      "Chicken Pakora Starter",
+      "King Prawn Bhaji on Puri"
+    ],
+    "data": [
+      { "item": "Chicken Chaat Starter", "price": "3.95", "info": "Mashed Chicken served with a Puri" },
+      { "item": "Tikka Chaat Starter", "price": "3.95", "info": "Marinated Chicken Tikka served with a Puri" },
+      { "item": "Onion Bhaji", "price": "2.95", "info": "Crispy Fried Onions" },
+      { "item": "Vegetable Pakora Starter", "price": "2.95", "info": "Cabbage, Carrot and Potatoes" },
+      {
+        "item": "Samosas (Mean or Vegetable)",
+        "price": "3.50",
+        "option": [{ "name": "Samosas (Mean or Vegetable):", "required": true, "options": [{ "name": "Mean" }] }]
+      },
+      { "item": "Prawn Cocktail Starter", "price": "3.95" },
+      { "item": "Bhuna Prawn on Puri", "price": "3.95" },
+      { "item": "Bhuna Chicken on Puri", "price": "3.95" },
+      { "item": "Chicken Pakora Starter", "price": "3.95" },
+      { "item": "King Prawn Bhaji on Puri", "price": "4.95" }
+    ],
+    "cache": []
+  }
+]
