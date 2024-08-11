@@ -385,8 +385,15 @@ const run = async () => {
           let optionElementFromDiv = getNodeElements(divItemChoices);
 
           const getAllOptions = (curr) => {
+            console.log("");
+            console.log("");
+            console.log("curr : ", curr);
             // return options
-            return curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children?.map((innerCurr) => {
+            const getOptionsDepth5 =
+              curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children;
+            const getOptionsDepth3 = curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children;
+            const getOptions = getOptionsDepth5 ?? getOptionsDepth3;
+            return getOptions?.map((innerCurr) => {
               const name = getInnerText(innerCurr);
 
               const price =
@@ -427,9 +434,8 @@ const run = async () => {
             const item = getInnerText(curr, 0);
             const info = getInnerText(curr?.children[0]?.children[1]);
             const price = getInnerText(getDataByTagName(curr, "h4")[0])?.split("£")[1];
-            let result = {};
-            result.item = item;
-            if (price) {
+            let result: { item: string; price?: string; info?: string; option?: any[] } = { item };
+            if (price && price !== "") {
               result.price = price;
             }
             if (info && !info.includes("£")) {
@@ -445,6 +451,7 @@ const run = async () => {
         });
         await page.waitForTimeout(30);
 
+        // await page.waitForTimeout(20000);
         if (scrappingItemData?.length > 0) {
           scrapingMenuData = scrapingMenuData.map((mainItem) => {
             const i = { ...mainItem };
@@ -502,30 +509,44 @@ const run = async () => {
           srl,
           lst: [],
         };
-
+        let optionForIndex = 0;
         for (const itemData of section.data) {
-          const item = {
+          optionForIndex += 1;
+          const item: {
+            item: string;
+            id: string;
+            price?: string;
+            info?: string;
+            option?: any[];
+          } = {
             item: itemData.item,
-            price: itemData.price,
-            info: itemData.info || "",
             id: uuidv4(),
-            option: [],
           };
-
-          if (itemData.option) {
+          if (itemData.price && itemData.price !== "") {
+            item.price = itemData.price;
+          }
+          if (itemData.info && itemData.info !== "") {
+            item.info = itemData.info;
+          }
+          if (itemData.option && itemData.option?.length > 0) {
+            item.option = [];
             for (const optionGroup of itemData.option) {
               const optionGroupData = {
                 name: optionGroup.name,
-                optionFor: optionGroup.optionFor || optionGroup.name, // Default to name if no 'optionFor'
+                optionFor: optionGroup.optionFor || `from option ${optionForIndex}`, // if no optionFor  found
                 required: optionGroup.required || false,
                 options: [],
               };
 
               for (const option of optionGroup.options) {
-                optionGroupData.options.push({
-                  name: option.name,
-                  price: option.price || "",
-                });
+                const item: {
+                  name: string;
+                  price?: string;
+                } = { name: option.name };
+                if (option.price && option.price !== "") {
+                  item.price = option.price;
+                }
+                optionGroupData.options.push(item);
               }
 
               item.option.push(optionGroupData);
