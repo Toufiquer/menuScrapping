@@ -385,20 +385,35 @@ const run = async () => {
           let optionElementFromDiv = getNodeElements(divItemChoices);
 
           const getAllOptions = (curr) => {
-            console.log("");
-            console.log("");
-            console.log("curr : ", curr);
             // return options
             const getOptionsDepth5 =
               curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children;
             const getOptionsDepth3 = curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children;
-            const getOptions = getOptionsDepth5 ?? getOptionsDepth3;
+            let getOptions = getOptionsDepth3;
+            console.log("");
+            console.log("");
+            console.log("curr : ", curr);
+            console.log("getOptionsDepth3 : ", getOptionsDepth3);
+            console.log("getOptionsDepth5 : ", getOptionsDepth5);
+            if (getOptionsDepth5.length > getOptionsDepth3.length) {
+              getOptions = getOptionsDepth5;
+            }
             return getOptions?.map((innerCurr) => {
               const name = getInnerText(innerCurr);
-
-              const price =
+              if (name === "Samosas (Mean or Vegetable)" || name === "Samosas (Mean or Vegetable):") {
+                console.log("");
+                console.log("");
+                console.log("");
+                console.log("");
+                console.log("**********************************************************");
+                console.log("innerCurr : ", innerCurr);
+              }
+              let price =
                 innerCurr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
                   ?.children[0]?.children[1]?.innerText;
+              if (!price) {
+                price = innerCurr?.children[0]?.children[0]?.children[0]?.children[1]?.innerText;
+              }
               const result: { name: string; price?: string } = { name };
               if (price) {
                 result.price = price.split("+")[1].split("£")[1];
@@ -451,7 +466,7 @@ const run = async () => {
         });
         await page.waitForTimeout(30);
 
-        // await page.waitForTimeout(20000);
+        await page.waitForTimeout(20000);
         if (scrappingItemData?.length > 0) {
           scrapingMenuData = scrapingMenuData.map((mainItem) => {
             const i = { ...mainItem };
