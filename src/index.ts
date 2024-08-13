@@ -70,14 +70,15 @@ const run = async () => {
       console.log("Data saved to menu.json");
     });
   } else {
-    // const kitchen = await rl.question("Enter kitchen name\t");
-    // const alias = await rl.question("Enter kitchen alias\t");
-    // const url = await rl.question("Enter url\t");
-
-    const kitchen = "kitchen";
-    const alias = "alias";
-    const address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
-    const url = "https://www.just-eat.co.uk/restaurants-spice-fossway-tandoori-walker/menu";
+    let address = "9 Scrogg Road Newcastle upon Tyne, NE6 4AR";
+    const kitchen = await rl.question("Enter kitchen name\t");
+    const alias = await rl.question("Enter kitchen alias\t");
+    const url = await rl.question("Enter url\t");
+    const getAddressYN = await rl.question(`Do you want to use default address? (y/n) (address: ${address})\t`);
+    if (getAddressYN === "n") {
+      const getAddress = await rl.question(`Enter address \t`);
+      address = getAddress;
+    }
 
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
@@ -390,33 +391,33 @@ const run = async () => {
               curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children;
             const getOptionsDepth3 = curr?.children[0]?.children[1]?.children[0]?.children[0]?.children[0]?.children;
             let getOptions = getOptionsDepth3;
-            console.log("");
-            console.log("");
-            console.log("curr : ", curr);
-            console.log("getOptionsDepth3 : ", getOptionsDepth3);
-            console.log("getOptionsDepth5 : ", getOptionsDepth5);
+            const getOptionsDepth0 = curr?.children[0]?.children[1]?.children;
             if (getOptionsDepth5.length > getOptionsDepth3.length) {
               getOptions = getOptionsDepth5;
             }
+            if (getOptionsDepth0.length > getOptionsDepth5.length) {
+              getOptions = getOptionsDepth0;
+            }
             return getOptions?.map((innerCurr) => {
               const name = getInnerText(innerCurr);
-              if (name === "Samosas (Mean or Vegetable)" || name === "Samosas (Mean or Vegetable):") {
-                console.log("");
-                console.log("");
-                console.log("");
-                console.log("");
-                console.log("**********************************************************");
-                console.log("innerCurr : ", innerCurr);
-              }
+
               let price =
                 innerCurr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]
                   ?.children[0]?.children[1]?.innerText;
               if (!price) {
                 price = innerCurr?.children[0]?.children[0]?.children[0]?.children[1]?.innerText;
               }
+              if (!price) {
+                price =
+                  innerCurr?.children[0]?.children[0]?.children[0]?.children[0]?.children[0]?.children[1]?.innerText;
+              }
               const result: { name: string; price?: string } = { name };
               if (price) {
-                result.price = price.split("+")[1].split("£")[1];
+                if (price.includes("+")) {
+                  result.price = price.split("+")[1].split("£")[1];
+                } else {
+                  result.price = price.split("£")[1];
+                }
               }
               return result;
             });
@@ -466,7 +467,7 @@ const run = async () => {
         });
         await page.waitForTimeout(30);
 
-        await page.waitForTimeout(20000);
+        // await page.waitForTimeout(20000);
         if (scrappingItemData?.length > 0) {
           scrapingMenuData = scrapingMenuData.map((mainItem) => {
             const i = { ...mainItem };
@@ -591,13 +592,6 @@ const run = async () => {
         return;
       }
       console.log("Data saved to menu.json");
-    });
-    fs.writeFile("scrapingMenuData-final.json", JSON.stringify(scrapingMenuData), (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log("Data saved to scrapingMenuData-final.json");
     });
 
     await browser.close();
